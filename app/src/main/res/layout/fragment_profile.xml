@@ -113,7 +113,6 @@
                         android:includeFontPadding="false"
                         android:text="Wallet"
                         android:textColor="@color/white"
-
                         android:textSize="14sp" />
 
                 </RelativeLayout>

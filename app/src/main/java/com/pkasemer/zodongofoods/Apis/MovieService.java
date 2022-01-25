@@ -32,4 +32,12 @@ public interface MovieService {
     @GET("banner/read.php")
     Call<HomeBannerModel> getHomeBanners();
 
+//    menus/menudetails.php?menuId=9&category=3&page=1
+    @GET("menus/menudetails.php")
+    Call<SelectedCategoryMenuItem> getMenuDetails(
+            @Query("menuId") int menu_id,
+            @Query("category") int menu_category_id,
+            @Query("page") int pageIndex
+    );
+
 }

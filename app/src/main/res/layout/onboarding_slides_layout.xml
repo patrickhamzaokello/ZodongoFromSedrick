@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/slider_image"
@@ -24,7 +24,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/texton_green"
+        android:textColor="@color/purple_200"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/slider_desc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/first_slide_desc"
-        android:textColor="@color/texton_green"
+        android:textColor="@color/purple_200"
         android:textSize="14sp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

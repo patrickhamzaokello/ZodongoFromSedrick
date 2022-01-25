@@ -26,6 +26,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.zodongofoods.Fragments.MenuDetail;
+import com.pkasemer.zodongofoods.Fragments.OnlineMenuDetail;
+import com.pkasemer.zodongofoods.Fragments.SelectedCategory;
 import com.pkasemer.zodongofoods.Models.SectionedMenuItem;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
@@ -109,12 +111,20 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         holder.itemimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuDetail menuDetail = new MenuDetail();
+//                MenuDetail menuDetail = new MenuDetail();
+//                Bundle mBundle = new Bundle();
+//                mBundle.putParcelable("sectionedMenuItem", sectionedMenuItem);
+//                mBundle.putString("modeltype", String.valueOf(0));
+//                menuDetail.setArguments(mBundle);
+//                switchContent(R.id.navHostFragment, menuDetail);
+
+
+                OnlineMenuDetail onlineMenuDetail = new OnlineMenuDetail();
                 Bundle mBundle = new Bundle();
-                mBundle.putParcelable("sectionedMenuItem", sectionedMenuItem);
-                mBundle.putString("modeltype", String.valueOf(0));
-                menuDetail.setArguments(mBundle);
-                switchContent(R.id.navHostFragment, menuDetail);
+                mBundle.putString("selectMenuId", String.valueOf(sectionedMenuItem.getMenuId()));
+                mBundle.putString("category_selected_key", String.valueOf(sectionedMenuItem.getMenuTypeId()));
+                onlineMenuDetail.setArguments(mBundle);
+                switchContent(R.id.navHostFragment, onlineMenuDetail);
             }
         });
     }

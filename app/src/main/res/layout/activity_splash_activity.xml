@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
+    android:background="@color/white"
     tools:context=".SplashActivity">
 
 
@@ -28,7 +28,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:text="Zodongo Foods"
-        android:textColor="@color/texton_green"
+        android:textColor="@color/purple_200"
         android:textSize="34sp"
         android:transitionName="logo_text"
         app:layout_constraintBottom_toTopOf="@+id/splashtextdesc"
@@ -45,7 +45,7 @@
         android:paddingHorizontal="20dp"
         android:text="The Best Place in Town for Food, You Order We Deliver"
         android:textAlignment="center"
-        android:textColor="@color/texton_green"
+        android:textColor="@color/purple_500"
         android:textSize="18sp"
         android:transitionName="logo_desc"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
