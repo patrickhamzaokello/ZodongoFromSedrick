@@ -3,6 +3,7 @@ package com.pkasemer.zodongofoods.Adapters;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.zodongofoods.Fragments.SelectedCategory;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModelResult;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.zodongofoods.MySelectedCategory;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
@@ -137,19 +139,18 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
 
-                        SelectedCategory selectedCategory = new SelectedCategory();
-                        Bundle mBundle = new Bundle();
-                        mBundle.putString("category_selected_key", String.valueOf(homeMenuCategoryModelResult.getId()));
-                        selectedCategory.setArguments(mBundle);
-                        switchContent(R.id.navHostFragment, selectedCategory);
+//                        SelectedCategory selectedCategory = new SelectedCategory();
+//                        Bundle mBundle = new Bundle();
+//                        mBundle.putString("category_selected_key", String.valueOf(homeMenuCategoryModelResult.getId()));
+//                        selectedCategory.setArguments(mBundle);
+//                        switchContent(R.id.navHostFragment, selectedCategory);
 
 
-//
-//                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
-//                        //PACK DATA
-//                        i.putExtra("SENDER_KEY", "MyFragment");
-//                        i.putExtra("category_selected_key", homeMenuCategoryModelResult.getId());
-//                        context.startActivity(i);
+                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MyFragment");
+                        i.putExtra("category_selected_key", homeMenuCategoryModelResult.getId());
+                        context.startActivity(i);
 
 
 

@@ -3,6 +3,7 @@ package com.pkasemer.zodongofoods.Adapters;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.zodongofoods.Fragments.MenuDetail;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.zodongofoods.MyMenuDetail;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
@@ -164,12 +166,19 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                 movieVH.mPosterImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MenuDetail menuDetail = new MenuDetail();
-                        Bundle mBundle = new Bundle();
-                        mBundle.putParcelable("sectionedMenuItem", selectedCategoryMenuItemResult);
-                        mBundle.putString("modeltype", String.valueOf(1));
-                        menuDetail.setArguments(mBundle);
-                        switchContent(R.id.navHostFragment, menuDetail);
+//                        MenuDetail menuDetail = new MenuDetail();
+//                        Bundle mBundle = new Bundle();
+//                        mBundle.putParcelable("sectionedMenuItem", selectedCategoryMenuItemResult);
+//                        mBundle.putString("modeltype", String.valueOf(1));
+//                        menuDetail.setArguments(mBundle);
+//                        switchContent(R.id.navHostFragment, menuDetail);
+
+                        Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MenuDetails");
+                        i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
+                        i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
+                        context.startActivity(i);
                     }
                 });
 
