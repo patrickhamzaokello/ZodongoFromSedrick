@@ -133,12 +133,14 @@
                 android:padding="10dp">
 
                 <Button
-                    android:id="@+id/home_st_carttn"
+                    android:id="@+id/menu_st_carttn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:background="@drawable/custom_cart_btn"
-                    android:backgroundTint="@color/purple_500" />
+                    android:backgroundTint="@color/buttonRed"
+                    android:theme="@style/Redbtn"
+                     />
 
             </RelativeLayout>
 
@@ -159,12 +161,14 @@
                 android:padding="10dp">
 
                 <Button
-                    android:id="@+id/home_st_likebtn"
+                    android:id="@+id/menu_st_likebtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:background="@drawable/custom_cart_like_btn"
-                    android:backgroundTint="@color/purple_500" />
+                    android:backgroundTint="@color/buttonRed"
+                    android:theme="@style/Redbtn"
+                    />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

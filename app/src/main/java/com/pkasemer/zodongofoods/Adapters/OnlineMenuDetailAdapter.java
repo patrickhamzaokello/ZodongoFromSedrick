@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -427,6 +428,96 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
+                movieVH.menu_st_carttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger
+                            );
+
+
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+                            updatecartCount();
+
+                        }
+                    }
+                });
+                movieVH.menu_st_likebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger
+                            );
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+
+                            updatecartCount();
+
+                        }
+                    }
+                });
+
+
+
                 break;
 
             case LOADING:
@@ -559,6 +650,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     private void updatecartCount() {
+        db = new SenseDBHelper(context);
         String mycartcount = String.valueOf(db.countCart());
         Intent intent = new Intent(context.getString(R.string.cartcoutAction));
         intent.putExtra(context.getString(R.string.cartCount), mycartcount);
@@ -632,6 +724,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private TextView mYear; // displays "year | language"
         private ImageView mPosterImg;
         private ProgressBar mProgress;
+        private Button menu_st_likebtn, menu_st_carttn;
 
         public MovieVH(View itemView) {
             super(itemView);
@@ -642,6 +735,10 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             mYear = (TextView) itemView.findViewById(R.id.movie_year);
             mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
             mProgress = (ProgressBar) itemView.findViewById(R.id.movie_progress);
+
+            menu_st_carttn = (Button) itemView.findViewById(R.id.menu_st_carttn);
+            menu_st_likebtn = (Button)  itemView.findViewById(R.id.menu_st_likebtn);
+
         }
     }
 
