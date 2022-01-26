@@ -67,7 +67,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_selected_category);
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        actionBar.setTitle("Selected Menu Category");
+        actionBar.setTitle("Menu Category");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){

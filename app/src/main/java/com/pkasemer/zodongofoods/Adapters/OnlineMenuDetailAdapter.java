@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,11 +27,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.button.MaterialButton;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.MyMenuDetail;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
+import com.pkasemer.zodongofoods.Utils.MenuDetailListener;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
 
 import java.text.NumberFormat;
@@ -63,10 +66,10 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
-    private PaginationAdapterCallback mCallback;
+    private MenuDetailListener mCallback;
     private String errorMsg;
 
-    public OnlineMenuDetailAdapter(Context context, PaginationAdapterCallback callback) {
+    public OnlineMenuDetailAdapter(Context context, MenuDetailListener callback) {
         this.context = context;
         this.mCallback = callback;
         movieSelectedCategoryMenuItemResults = new ArrayList<>();
@@ -104,7 +107,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.selected_category_pagination_item_list, parent, false);
+        View v1 = inflater.inflate(R.layout.online_menudetail_pagination_item_list, parent, false);
         viewHolder = new MovieVH(v1);
         return viewHolder;
     }
@@ -118,9 +121,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
 
-                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
-                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
-                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+                heroVh.menu_name.setText(selectedCategoryMenuItemResult.getMenuName());
+                heroVh.menu_shortinfo.setText(formatYearLabel(selectedCategoryMenuItemResult));
+                heroVh.menu_description.setText(selectedCategoryMenuItemResult.getDescription());
 
                 Glide
                         .with(context)
@@ -142,7 +145,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
                         .centerCrop()
                         .transition(withCrossFade(factory))
-                        .into(heroVh.mPosterImg);
+                        .into(heroVh.menu_image);
+
+
 
 
                 break;
@@ -336,19 +341,31 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-        private TextView mMovieTitle;
-        private TextView mMovieDesc;
-        private TextView mYear;
-        private ImageView mPosterImg;
+        private ImageView menu_image;
+        private TextView menu_name, menu_shortinfo, menu_description, ratingnumber, menu_price, menu_qtn, itemQuanEt, menu_total_price;
+        private Button incrementQtn, decreaseQtn, btnAddtoCart, menu_detail_st_cartbtn,menu_detail_st_likebtn;
         private ProgressBar mProgress;
+
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
-            mMovieTitle = (TextView) itemView.findViewById(R.id.menu_name);
-            mMovieDesc = (TextView) itemView.findViewById(R.id.menu_description);
-            mYear = (TextView) itemView.findViewById(R.id.menu_shortinfo);
-            mPosterImg = (ImageView) itemView.findViewById(R.id.menu_image);
+            menu_image = (ImageView) itemView.findViewById(R.id.menu_image);
+            menu_name = (TextView) itemView.findViewById(R.id.menu_name);
+            menu_shortinfo = (TextView) itemView.findViewById(R.id.menu_shortinfo);
+            menu_description = (TextView) itemView.findViewById(R.id.menu_description);
+            ratingnumber = (TextView) itemView.findViewById(R.id.ratingnumber);
+            menu_price = (TextView) itemView.findViewById(R.id.menu_price);
+            menu_qtn = (TextView) itemView.findViewById(R.id.menu_qtn);
+            itemQuanEt = (TextView) itemView.findViewById(R.id.itemQuanEt);
+            menu_total_price = (TextView) itemView.findViewById(R.id.menu_total_price);
+            incrementQtn = itemView.findViewById(R.id.addBtn);
+            decreaseQtn = itemView.findViewById(R.id.removeBtn);
+            btnAddtoCart = (MaterialButton) itemView.findViewById(R.id.btnAddtoCart);
+
+            menu_detail_st_cartbtn = itemView.findViewById(R.id.menu_detail_st_cartbtn);
+            menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
+
             mProgress = (ProgressBar) itemView.findViewById(R.id.product_detail_image_progress);
         }
     }

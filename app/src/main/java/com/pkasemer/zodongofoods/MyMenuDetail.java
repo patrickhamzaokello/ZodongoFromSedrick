@@ -23,8 +23,10 @@ import com.pkasemer.zodongofoods.Adapters.OnlineMenuDetailAdapter;
 import com.pkasemer.zodongofoods.Adapters.SelectedCategoryPaginationAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.zodongofoods.Utils.MenuDetailListener;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
 import com.pkasemer.zodongofoods.Utils.PaginationScrollListener;
 
@@ -35,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyMenuDetail extends AppCompatActivity implements PaginationAdapterCallback {
+public class MyMenuDetail extends AppCompatActivity implements MenuDetailListener {
 
 
     private static final String TAG = "MyMenuDetail";
@@ -60,7 +62,6 @@ public class MyMenuDetail extends AppCompatActivity implements PaginationAdapter
     private int selectMenuId;
 
     private MovieService movieService;
-    private Object PaginationAdapterCallback;
     ActionBar actionBar;
 
 
@@ -253,6 +254,26 @@ public class MyMenuDetail extends AppCompatActivity implements PaginationAdapter
     @Override
     public void retryPageLoad() {
         loadNextPage();
+    }
+
+    @Override
+    public void incrementqtn(int qty, FoodDBModel foodDBModel) {
+
+    }
+
+    @Override
+    public void decrementqtn(int qty, FoodDBModel foodDBModel) {
+
+    }
+
+    @Override
+    public void addToCartbtn(int qty, FoodDBModel foodDBModel) {
+
+    }
+
+    @Override
+    public void orderNowMenuBtn(FoodDBModel foodDBModel) {
+
     }
 
 
