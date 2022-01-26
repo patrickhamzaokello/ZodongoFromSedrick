@@ -20,6 +20,13 @@
     </style>
 
     <style name="Redbtn" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/buttonRed</item>
+        <item name="colorPrimaryDark">@color/buttonRed</item>
+        <item name="colorAccent">@color/buttonRed</item>
+    </style>
+
+
+    <style name="BlackBtn" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryDark">@color/purple_500</item>
         <item name="colorAccent">@color/purple_700</item>
