@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +37,7 @@ import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
 import com.pkasemer.zodongofoods.Utils.MenuDetailListener;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
+import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -53,7 +56,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int LOADING = 1;
     private static final int HERO = 2;
 
-//    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
+    //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
 
 
@@ -68,6 +71,13 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private MenuDetailListener mCallback;
     private String errorMsg;
+
+
+    int minteger = 1;
+    int totalPrice;
+
+    SenseDBHelper db;
+    boolean food_db_itemchecker;
 
     public OnlineMenuDetailAdapter(Context context, MenuDetailListener callback) {
         this.context = context;
@@ -116,10 +126,12 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
+        db = new SenseDBHelper(context);
 
         switch (getItemViewType(position)) {
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
+
 
                 heroVh.menu_name.setText(selectedCategoryMenuItemResult.getMenuName());
                 heroVh.menu_shortinfo.setText(formatYearLabel(selectedCategoryMenuItemResult));
@@ -148,6 +160,220 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .into(heroVh.menu_image);
 
 
+                heroVh.ratingnumber.setText(selectedCategoryMenuItemResult.getRating() + " | " + "5");
+                heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+                heroVh.menu_qtn.setText("1");
+                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+
+                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                updatecartCount();
+
+                if (food_db_itemchecker) {
+                    heroVh.btnAddtoCart.setText("Add to Cart");
+                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+                    heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+                    heroVh.itemQuanEt.setText("1");
+
+                    heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                    heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+                } else {
+                    heroVh.btnAddtoCart.setText("Remove from Cart");
+                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+                    heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+                    minteger = db.getMenuQtn(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                    display(minteger,heroVh,selectedCategoryMenuItemResult);
+
+                    heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                    heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+
+                }
+
+                heroVh.incrementQtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        minteger = minteger + 1;
+                        display(minteger,heroVh, selectedCategoryMenuItemResult);
+                    }
+                });
+
+                heroVh.decreaseQtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        minteger = minteger - 1;
+
+                        if (minteger <= 1) {
+                            minteger = 1;
+                            display(minteger,heroVh,selectedCategoryMenuItemResult);
+                        } else {
+                            display(minteger,heroVh,selectedCategoryMenuItemResult);
+                        }
+                    }
+                });
+
+                heroVh.btnAddtoCart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger
+                            );
+
+
+                            heroVh.btnAddtoCart.setText("Remove from Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                            heroVh.btnAddtoCart.setText("Add to Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+                            updatecartCount();
+
+                        }
+                    }
+                });
+
+
+                heroVh.menu_detail_st_cartbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger
+                            );
+
+
+                            heroVh.btnAddtoCart.setText("Remove from Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                            heroVh.btnAddtoCart.setText("Add to Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+                            updatecartCount();
+
+                        }
+                    }
+                });
+
+
+                heroVh.menu_detail_st_likebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger
+                            );
+
+
+                            heroVh.btnAddtoCart.setText("Remove from Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                            heroVh.btnAddtoCart.setText("Add to Cart");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+
+                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+
+                            updatecartCount();
+
+                        }
+                    }
+                });
 
 
                 break;
@@ -159,7 +385,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
 
                 movieVH.mYear.setText(
-                        "Rating "+ selectedCategoryMenuItemResult.getRating()
+                        "Rating " + selectedCategoryMenuItemResult.getRating()
                                 + " | "
                                 + "5"
                 );
@@ -264,7 +490,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 selectedCategoryMenuItemResult.getCreated().substring(0, 4);
     }
 
-    private RequestBuilder< Drawable > loadImage(@NonNull String posterPath) {
+    private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
                 .with(context)
                 .load(BASE_URL_IMG + posterPath)
@@ -331,6 +557,34 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
+    private void updatecartCount() {
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+
+    private void display(int number,HeroVH heroVh , SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
+
+        totalPrice = number * (selectedCategoryMenuItemResult.getPrice());
+
+        heroVh.itemQuanEt.setText("" + number);
+        heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice));
+
+        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+        if (food_db_itemchecker) {
+            return;
+            //item doesnt exist
+        } else {
+            db.updateMenuCount(number,selectedCategoryMenuItemResult.getMenuId());
+            //item exists
+
+        }
+    }
+
+
    /*
    View Holders
    _________________________________________________________________________________________________
@@ -343,7 +597,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     protected class HeroVH extends RecyclerView.ViewHolder {
         private ImageView menu_image;
         private TextView menu_name, menu_shortinfo, menu_description, ratingnumber, menu_price, menu_qtn, itemQuanEt, menu_total_price;
-        private Button incrementQtn, decreaseQtn, btnAddtoCart, menu_detail_st_cartbtn,menu_detail_st_likebtn;
+        private Button incrementQtn, decreaseQtn, btnAddtoCart, menu_detail_st_cartbtn, menu_detail_st_likebtn;
         private ProgressBar mProgress;
 
 

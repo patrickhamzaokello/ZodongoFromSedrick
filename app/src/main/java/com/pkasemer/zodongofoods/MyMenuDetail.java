@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -267,12 +268,12 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
     }
 
     @Override
-    public void addToCartbtn(int qty, FoodDBModel foodDBModel) {
+    public void addToCartbtn(SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
 
     }
 
     @Override
-    public void orderNowMenuBtn(FoodDBModel foodDBModel) {
+    public void orderNowMenuBtn(SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
 
     }
 

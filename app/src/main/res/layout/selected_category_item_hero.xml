@@ -19,8 +19,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.9"
-        android:background="#0b8043"/>
+        android:alpha="0.7"
+        android:background="@color/purple_700"/>
 
     <LinearLayout
         android:layout_width="match_parent"
