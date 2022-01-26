@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pkasemer.zodongofoods.Adapters.CartAdapter;
 import com.pkasemer.zodongofoods.HelperClasses.CartItemHandlerListener;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
+import com.pkasemer.zodongofoods.MyMenuDetail;
+import com.pkasemer.zodongofoods.PlaceOrder;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
@@ -40,6 +43,8 @@ public class Cart extends Fragment implements CartItemHandlerListener {
 
     TextView grandtotalvalue;
     LinearLayout procceed_checkout_layout;
+
+    Button btnCheckout;
 
     public Cart() {
         // Required empty public constructor
@@ -70,6 +75,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         grandtotalvalue = view.findViewById(R.id.grandtotalvalue);
         recyclerView = view.findViewById(R.id.cart_main_recycler);
         procceed_checkout_layout = view.findViewById(R.id.procceed_checkout_layout);
+        btnCheckout = view.findViewById(R.id.btnCheckout);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -89,6 +95,15 @@ public class Cart extends Fragment implements CartItemHandlerListener {
             recyclerView.setVisibility(View.GONE);
             emptycartwarning();
         }
+
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), PlaceOrder.class);
+                startActivity(i);
+            }
+        });
+
 
 
         return view;

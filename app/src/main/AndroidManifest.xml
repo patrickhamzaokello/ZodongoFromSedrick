@@ -17,6 +17,7 @@
         android:theme="@style/Theme.ZodongoFoods"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+        <activity android:name=".PlaceOrder"></activity>
         <activity
             android:name=".MyMenuDetail"
             android:exported="true" />
