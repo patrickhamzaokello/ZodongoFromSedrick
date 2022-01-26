@@ -5,7 +5,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.pkasemer.zodongofoods.Fragments.SelectedCategory;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModelResult;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.MySelectedCategory;
@@ -138,13 +136,6 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                 movieVH.mPosterImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-//                        SelectedCategory selectedCategory = new SelectedCategory();
-//                        Bundle mBundle = new Bundle();
-//                        mBundle.putString("category_selected_key", String.valueOf(homeMenuCategoryModelResult.getId()));
-//                        selectedCategory.setArguments(mBundle);
-//                        switchContent(R.id.navHostFragment, selectedCategory);
-
 
                         Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
                         //PACK DATA

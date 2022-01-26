@@ -5,7 +5,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +25,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.pkasemer.zodongofoods.Fragments.MenuDetail;
-import com.pkasemer.zodongofoods.Fragments.OnlineMenuDetail;
-import com.pkasemer.zodongofoods.Fragments.SelectedCategory;
 import com.pkasemer.zodongofoods.Models.SectionedMenuItem;
 import com.pkasemer.zodongofoods.MyMenuDetail;
-import com.pkasemer.zodongofoods.MySelectedCategory;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
@@ -114,21 +109,6 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         holder.itemimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                MenuDetail menuDetail = new MenuDetail();
-//                Bundle mBundle = new Bundle();
-//                mBundle.putParcelable("sectionedMenuItem", sectionedMenuItem);
-//                mBundle.putString("modeltype", String.valueOf(0));
-//                menuDetail.setArguments(mBundle);
-//                switchContent(R.id.navHostFragment, menuDetail);
-
-
-//                OnlineMenuDetail onlineMenuDetail = new OnlineMenuDetail();
-//                Bundle mBundle = new Bundle();
-//                mBundle.putString("selectMenuId", String.valueOf(sectionedMenuItem.getMenuId()));
-//                mBundle.putString("category_selected_key", String.valueOf(sectionedMenuItem.getMenuTypeId()));
-//                onlineMenuDetail.setArguments(mBundle);
-//                switchContent(R.id.navHostFragment, onlineMenuDetail);
-
                 Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
                 //PACK DATA
                 i.putExtra("SENDER_KEY", "MenuDetails");

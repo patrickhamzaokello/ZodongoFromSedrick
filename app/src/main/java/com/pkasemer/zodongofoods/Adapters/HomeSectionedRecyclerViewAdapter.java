@@ -68,11 +68,6 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
         holder.showAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SelectedCategory selectedCategory = new SelectedCategory();
-//                Bundle mBundle = new Bundle();
-//                mBundle.putString("category_selected_key", String.valueOf(sectionedCategoryResult.getId()));
-//                selectedCategory.setArguments(mBundle);
-//                switchContent(R.id.navHostFragment, selectedCategory);
 
                 Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
                 //PACK DATA
