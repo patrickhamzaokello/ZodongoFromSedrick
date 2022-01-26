@@ -1,12 +1,15 @@
 package com.pkasemer.zodongofoods.Apis;
 
+import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.HomeBannerModel;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
 import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
@@ -38,6 +41,13 @@ public interface MovieService {
             @Query("menuId") int menu_id,
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
+    );
+
+
+
+    @POST("menus/create.php")
+    Call<FoodDBModel> postCartItems(
+        @Body FoodDBModel foodDBModel
     );
 
 }
