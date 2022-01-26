@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/onboardingBG">
 
     <ImageView
         android:id="@+id/slider_image"
@@ -15,16 +15,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/chefchef" />
+        app:srcCompat="@drawable/chefone" />
 
     <TextView
         android:id="@+id/slider_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/slider_desc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +39,9 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/first_slide_desc"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/white"
         android:textSize="14sp"
+        android:fontFamily="@font/montserrat"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
