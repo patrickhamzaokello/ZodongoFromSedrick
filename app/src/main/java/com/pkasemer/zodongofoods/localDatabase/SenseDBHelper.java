@@ -14,7 +14,7 @@ import java.util.List;
 public class SenseDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "zodongo";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 1;
     private static final String DB_TABLE = "CART";
 
     List<FoodDBModel> foodDBModelList;
@@ -26,8 +26,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        updateMyDatabase(db, 0, DB_VERSION);
-        db.execSQL("CREATE TABLE CART (" +
+
+        String sql = "CREATE TABLE CART (" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "menuId INTEGER," +
                 "menuName TEXT," +
@@ -41,87 +41,19 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 "created TEXT," +
                 "modified TEXT," +
                 "rating INTEGER," +
-                "quantity INTEGER DEFAULT 1)");
+                "quantity INTEGER DEFAULT 1)";
+
+        db.execSQL(sql);
     }
 
+    //upgrading the database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        updateMyDatabase(db, oldVersion, newVersion);
+        String sql = "DROP TABLE IF EXISTS " + DB_TABLE;
+        db.execSQL(sql);
+        onCreate(db);
     }
 
-    private static void insertTweet(SQLiteDatabase db,
-                                    int menuId,
-                                    String menuname,
-                                    int price,
-                                    String description,
-                                    int menutypeid,
-                                    String menuImage,
-                                    String backgroundImage,
-                                    String ingredients,
-                                    int menustatus,
-                                    String created,
-                                    String modified,
-                                    int rating) {
-        ContentValues foodValue = new ContentValues();
-        foodValue.put("menuId", menuId);
-        foodValue.put("menuName", menuname);
-        foodValue.put("price", price);
-        foodValue.put("description", description);
-        foodValue.put("menuTypeId", menutypeid);
-        foodValue.put("menuImage", menuImage);
-        foodValue.put("backgroundImage", backgroundImage);
-        foodValue.put("ingredients", ingredients);
-        foodValue.put("menuStatus", menustatus);
-        foodValue.put("created", created);
-        foodValue.put("modified", modified);
-        foodValue.put("rating", rating);
-
-
-        db.insert(DB_TABLE, null, foodValue);
-
-    }
-
-
-    private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            db.execSQL("CREATE TABLE CART (" +
-                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "menuId INTEGER," +
-                    "menuName TEXT," +
-                    "price INTEGER," +
-                    "description REAL," +
-                    "menuTypeId INTEGER," +
-                    "menuImage TEXT," +
-                    "backgroundImage TEXT," +
-                    "ingredients TEXT," +
-                    "menuStatus INTEGER," +
-                    "created TEXT," +
-                    "modified TEXT," +
-                    "rating INTEGER,"+
-                    "quantity INTEGER DEFAULT 1)");
-
-
-            insertTweet(
-                    db,
-                    1,
-                    "beef burger",
-                    4000,
-                    "best in town",
-                    2,
-                    "https://pkasemer.com/asset/me.png",
-                    "https://pkasemer.com/asset/me.png",
-                    "meat, salt and sugar",
-                    2,
-                    "2020-04-12",
-                    "2020-04-12",
-                    2
-            );
-
-        }
-        if (oldVersion < 3) {
-
-        }
-    }
 
     public List<FoodDBModel> listTweetsBD() {
         String sql = "select * from " + DB_TABLE + " order by _id DESC";

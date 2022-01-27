@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,15 +14,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.pkasemer.zodongofoods.Adapters.CartAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +33,9 @@ import retrofit2.Response;
 public class PlaceOrder extends AppCompatActivity {
 
     private MovieService movieService;
-    FoodDBModel foodDBModel;
+    private SenseDBHelper db;
+    boolean food_db_itemchecker;
+    List<FoodDBModel> cartitemlist;
     
     Button btnCheckout;
 
@@ -43,6 +49,9 @@ public class PlaceOrder extends AppCompatActivity {
         String title = actionBar.getTitle().toString(); // get the title
         actionBar.hide();
 
+        db = new SenseDBHelper(PlaceOrder.this);
+        cartitemlist = db.listTweetsBD();
+
         btnCheckout = findViewById(R.id.btnCheckout);
 
         //init service and load data
@@ -52,7 +61,14 @@ public class PlaceOrder extends AppCompatActivity {
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFirstPage();
+
+                if (cartitemlist.size() > 0) {
+                    loadFirstPage();
+                } else {
+//                    emptycartwarning();
+                }
+
+
             }
         });
     }
@@ -65,30 +81,29 @@ public class PlaceOrder extends AppCompatActivity {
         // To ensure list is visible when retry button in error view is clicked
         hideErrorView();
 
-        placeUserOrder().enqueue(new Callback<FoodDBModel>() {
+        placeUserOrder().enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<FoodDBModel> call, Response<FoodDBModel> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hideErrorView();
 
-                Log.i("create", "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-              
+                Log.v("SUCCESS", response.body() + " " + cartitemlist);
                 
             }
 
             @Override
-            public void onFailure(Call<FoodDBModel> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
-                showErrorView(t);
+//                showErrorView(t);
+                Toast.makeText(PlaceOrder.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
 
-    private Call<FoodDBModel> placeUserOrder(){
+    private Call<ResponseBody> placeUserOrder(){
         return  movieService.postCartItems(
-                foodDBModel
+                cartitemlist
         );
     }
 

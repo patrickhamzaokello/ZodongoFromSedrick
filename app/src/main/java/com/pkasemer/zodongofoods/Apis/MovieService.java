@@ -6,6 +6,9 @@ import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
 import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -46,8 +49,8 @@ public interface MovieService {
 
 
     @POST("menus/create.php")
-    Call<FoodDBModel> postCartItems(
-        @Body FoodDBModel foodDBModel
+    Call<ResponseBody> postCartItems(
+            @Body List<FoodDBModel> foodDBModels
     );
 
 }
