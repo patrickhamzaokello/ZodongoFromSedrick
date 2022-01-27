@@ -52,7 +52,7 @@ public class LoginMaterial extends AppCompatActivity {
         //if the user is already logged in we will directly start the profile activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            startActivity(new Intent(this, RootActivity.class));
+            startActivity(new Intent(this, Demo.class));
             return;
         }
 

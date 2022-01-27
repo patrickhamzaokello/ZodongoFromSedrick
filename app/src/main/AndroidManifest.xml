@@ -17,7 +17,22 @@
         android:theme="@style/Theme.ZodongoFoods"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".PlaceOrder"></activity>
+        <receiver
+            android:name=".Utils.NetworkStateChecker"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name=".Demo"
+            android:exported="true"
+            />
+        <activity
+            android:name=".PlaceOrder"
+            android:exported="true"
+            />
         <activity
             android:name=".MyMenuDetail"
             android:exported="true" />
