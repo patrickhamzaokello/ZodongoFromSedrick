@@ -27,6 +27,7 @@
     </LinearLayout>
 
     <ListView
+        android:background="@color/rootbg"
         android:id="@+id/listViewNames"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>

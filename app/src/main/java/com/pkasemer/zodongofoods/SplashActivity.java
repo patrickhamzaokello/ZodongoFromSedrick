@@ -38,12 +38,9 @@ public class SplashActivity extends AppCompatActivity {
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.splashbottom_animation);
 
         image = findViewById(R.id.splashimage);
-        logo = findViewById(R.id.splash_text_heading);
-        slogan = findViewById(R.id.splashtextdesc);
 
         image.setAnimation(topAnim);
-        logo.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
+
 
 
 
