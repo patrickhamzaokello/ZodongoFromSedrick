@@ -428,6 +428,25 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
+                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                if (food_db_itemchecker) {
+
+                    //food not existing
+                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                    movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
+                } else {
+
+                    //food existing
+                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                    movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
+
+                }
+                updatecartCount();
+
                 movieVH.menu_st_carttn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
