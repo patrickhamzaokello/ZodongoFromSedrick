@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +19,19 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pkasemer.zodongofoods.Adapters.CartAdapter;
+import com.pkasemer.zodongofoods.HelperClasses.CartItemHandlerListener;
+import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
-public class RootActivity extends AppCompatActivity {
+import java.util.List;
+
+public class RootActivity extends AppCompatActivity implements CartItemHandlerListener {
 
     BottomNavigationView navView;
     SenseDBHelper db;
+    List<FoodDBModel> cartitemlist;
+    CartAdapter cartAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +102,41 @@ public class RootActivity extends AppCompatActivity {
             navView.getOrCreateBadge(R.id.navigation_cart).clearNumber();
             navView.getOrCreateBadge(R.id.navigation_cart).setVisible(false);
         }
+
+        refreshcartPage();
+
+
     }
 
 
+    private void refreshcartPage(){
 
+        db = new SenseDBHelper(this);
+        cartitemlist = db.listTweetsBD();
+
+        if (cartitemlist.size() > 0) {
+            cartAdapter = new CartAdapter(this, cartitemlist, this);
+            cartAdapter.notifyDataSetChanged();
+        }
+        else {
+//            recyclerView.setVisibility(View.GONE);
+//            emptycartwarning();
+        }
+    }
+
+
+    @Override
+    public void increment(int qty, FoodDBModel foodDBModel) {
+
+    }
+
+    @Override
+    public void decrement(int qty, FoodDBModel foodDBModel) {
+
+    }
+
+    @Override
+    public void deletemenuitem(String foodMenu_id, FoodDBModel foodDBModel) {
+
+    }
 }

@@ -421,10 +421,13 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     public void onClick(View v) {
                         Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
                         //PACK DATA
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                         i.putExtra("SENDER_KEY", "MenuDetails");
                         i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
                         i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
                         context.startActivity(i);
+
                     }
                 });
 

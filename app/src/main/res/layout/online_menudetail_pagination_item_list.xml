@@ -139,7 +139,7 @@
                     android:layout_centerInParent="true"
                     android:background="@drawable/custom_cart_btn"
                     android:backgroundTint="@color/buttonRed"
-                    android:theme="@style/Redbtn"
+                    android:theme="@style/BlackBtn"
                      />
 
             </RelativeLayout>
@@ -167,7 +167,7 @@
                     android:layout_centerInParent="true"
                     android:background="@drawable/custom_cart_like_btn"
                     android:backgroundTint="@color/buttonRed"
-                    android:theme="@style/Redbtn"
+                    android:theme="@style/BlackBtn"
                     />
 
             </RelativeLayout>
