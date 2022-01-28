@@ -14,7 +14,7 @@ import java.util.List;
 public class SenseDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "zodongo";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 3;
     private static final String DB_TABLE = "CART";
 
     List<FoodDBModel> foodDBModelList;

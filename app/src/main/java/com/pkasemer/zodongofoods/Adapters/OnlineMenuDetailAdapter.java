@@ -32,6 +32,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.google.android.material.button.MaterialButton;
+import com.pkasemer.zodongofoods.Fragments.Cart;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.MyMenuDetail;
 import com.pkasemer.zodongofoods.R;
@@ -517,8 +518,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             );
                             movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
                             movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-
 
                             updatecartCount();
 
