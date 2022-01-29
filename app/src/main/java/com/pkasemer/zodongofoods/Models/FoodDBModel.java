@@ -31,7 +31,9 @@ public class FoodDBModel  implements Parcelable {
 
     private Integer quantity;
 
-    public FoodDBModel(Integer menuId, String menuName, Integer price, String description, Integer menuTypeId, String menuImage, String backgroundImage, String ingredients, Integer menuStatus, String created, String modified, Integer rating, Integer quantity) {
+    private Integer orderstatus;
+
+    public FoodDBModel(Integer menuId, String menuName, Integer price, String description, Integer menuTypeId, String menuImage, String backgroundImage, String ingredients, Integer menuStatus, String created, String modified, Integer rating, Integer quantity, Integer orderstatus) {
         this.menuId = menuId;
         this.menuName = menuName;
         this.price = price;
@@ -45,6 +47,7 @@ public class FoodDBModel  implements Parcelable {
         this.modified = modified;
         this.rating = rating;
         this.quantity = quantity;
+        this.orderstatus = orderstatus;
     }
 
     protected FoodDBModel(Parcel in) {
@@ -202,6 +205,14 @@ public class FoodDBModel  implements Parcelable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getOrderstatus() {
+        return orderstatus;
+    }
+
+    public void setOrderstatus(Integer orderstatus) {
+        this.orderstatus = orderstatus;
     }
 
     @Override

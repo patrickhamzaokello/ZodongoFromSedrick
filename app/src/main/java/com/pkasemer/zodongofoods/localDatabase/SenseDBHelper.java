@@ -14,8 +14,25 @@ import java.util.List;
 public class SenseDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "zodongo";
-    private static final int DB_VERSION = 3;
-    private static final String DB_TABLE = "CART";
+    private static final int DB_VERSION = 7;
+    private static final String TABLE_NAME = "CART";
+    public static final String COLUMN_id = "_id";
+    public static final String COLUMN_menuId = "menuId";
+    public static final String COLUMN_menuName = "menuName";
+    public static final String COLUMN_price = "price";
+    public static final String COLUMN_description = "description";
+    public static final String COLUMN_menuTypeId = "menuTypeId";
+    public static final String COLUMN_menuImage = "menuImage";
+    public static final String COLUMN_backgroundImage = "backgroundImage";
+    public static final String COLUMN_ingredients = "ingredients";
+    public static final String COLUMN_menuStatus = "menuStatus";
+    public static final String COLUMN_created = "created";
+    public static final String COLUMN_modified = "modified";
+    public static final String COLUMN_rating = "rating";
+    public static final String COLUMN_quantity = "quantity";
+    public static final String COLUMN_order_status = "order_status";
+
+
 
     List<FoodDBModel> foodDBModelList;
 
@@ -28,20 +45,21 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String sql = "CREATE TABLE CART (" +
-                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "menuId INTEGER," +
-                "menuName TEXT," +
-                "price INTEGER," +
-                "description REAL," +
-                "menuTypeId INTEGER," +
-                "menuImage TEXT," +
-                "backgroundImage TEXT," +
-                "ingredients TEXT," +
-                "menuStatus INTEGER," +
-                "created TEXT," +
-                "modified TEXT," +
-                "rating INTEGER," +
-                "quantity INTEGER DEFAULT 1)";
+                COLUMN_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_menuId + " INTEGER," +
+                COLUMN_menuName + " TEXT," +
+                COLUMN_price + " INTEGER," +
+                COLUMN_description + " TEXT," +
+                COLUMN_menuTypeId +" INTEGER," +
+                COLUMN_menuImage + " TEXT," +
+                COLUMN_backgroundImage + " TEXT," +
+                COLUMN_ingredients + " TEXT," +
+                COLUMN_menuStatus + " INTEGER," +
+                COLUMN_created + " TEXT," +
+                COLUMN_modified + " TEXT," +
+                COLUMN_rating + " INTEGER," +
+                COLUMN_quantity + " INTEGER DEFAULT 1," +
+                COLUMN_order_status + " TINYINT )";
 
         db.execSQL(sql);
     }
@@ -49,14 +67,14 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     //upgrading the database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS " + DB_TABLE;
+        String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
         db.execSQL(sql);
         onCreate(db);
     }
 
 
     public List<FoodDBModel> listTweetsBD() {
-        String sql = "select * from " + DB_TABLE + " order by _id DESC";
+        String sql = "select * from " + TABLE_NAME + " order by " + COLUMN_id + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         foodDBModelList = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql, null);
@@ -76,8 +94,9 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 String modified = cursor.getString(11);
                 int rating = Integer.parseInt(cursor.getString(12));
                 int quantity = Integer.parseInt(cursor.getString(13));
+                int order_status = Integer.parseInt(cursor.getString(14));
 
-                foodDBModelList.add(new FoodDBModel(menuId, menuname, price,description, menutypid, menuimage,backgroundimage, ingredients,menuStatus, created,modified, rating,quantity));
+                foodDBModelList.add(new FoodDBModel(menuId, menuname, price,description, menutypid, menuimage,backgroundimage, ingredients,menuStatus, created,modified, rating,quantity,order_status));
             }
             while (cursor.moveToNext());
         }
@@ -98,71 +117,74 @@ public class SenseDBHelper extends SQLiteOpenHelper {
             String created,
             String modified,
             int rating,
-            int quantity
+            int quantity,
+            int order_status
     ) {
         ContentValues values = new ContentValues();
-        values.put("menuId", menuId);
-        values.put("menuName", menuname);
-        values.put("price", price);
-        values.put("description", description);
-        values.put("menuTypeId", menutypeid);
-        values.put("menuImage", menuImage);
-        values.put("backgroundImage", backgroundImage);
-        values.put("ingredients", ingredients);
-        values.put("menuStatus", menustatus);
-        values.put("created", created);
-        values.put("modified", modified);
-        values.put("rating", rating);
-        values.put("quantity", quantity);
+        values.put(COLUMN_menuId, menuId);
+        values.put(COLUMN_menuName, menuname);
+        values.put(COLUMN_price, price);
+        values.put(COLUMN_description, description);
+        values.put(COLUMN_menuTypeId, menutypeid);
+        values.put(COLUMN_menuImage, menuImage);
+        values.put(COLUMN_backgroundImage, backgroundImage);
+        values.put(COLUMN_ingredients, ingredients);
+        values.put(COLUMN_menuStatus, menustatus);
+        values.put(COLUMN_created, created);
+        values.put(COLUMN_modified, modified);
+        values.put(COLUMN_rating, rating);
+        values.put(COLUMN_quantity, quantity);
+        values.put(COLUMN_order_status, order_status);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(DB_TABLE, null, values);
+        db.insert(TABLE_NAME, null, values);
+        db.close();
     }
 
-    void updateTweet(FoodDBModel foodmenu) {
-        ContentValues values = new ContentValues();
-        values.put("menuName", foodmenu.getMenuName());
-        values.put("description", foodmenu.getDescription());
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.update(DB_TABLE, values, "menuId" + " = ?", new String[]{String.valueOf(foodmenu.getMenuId())});
-    }
 
    public void updateMenuCount(Integer qtn, Integer menuID) {
         ContentValues values = new ContentValues();
-        values.put("quantity", qtn);
+        values.put(COLUMN_quantity, qtn);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(DB_TABLE, values, "menuId" + " = ?", new String[]{String.valueOf(menuID)});
+        db.update(TABLE_NAME, values, COLUMN_menuId + " = ?", new String[]{String.valueOf(menuID)});
+        db.close();
     }
 
 
     public void deleteTweet(String id_str) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DB_TABLE, "menuId" + " = ?", new String[]{id_str});
+        db.delete(TABLE_NAME, COLUMN_menuId + " = ?", new String[]{id_str});
+        db.close();
     }
 
     public boolean checktweetindb(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(DB_TABLE,
-                new String[]{"menuId", "menuName", "description"},
-                "menuId = ?",
+        Cursor cursor = db.query(TABLE_NAME,
+                new String[]{COLUMN_menuId, COLUMN_menuName, COLUMN_description},
+                COLUMN_menuId + " = ?",
                 new String[]{id_str},
                 null, null, null, null);
         if (cursor.moveToFirst()) {
             //recordexist
             cursor.close();
+            db.close();
             return false;
         } else {
             //record not existing
             cursor.close();
+            db.close();
+
             return true;
         }
     }
 
     public int countCart(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor mCount= db.rawQuery("select count(*) from " +DB_TABLE , null);
+        Cursor mCount= db.rawQuery("select count(*) from " + TABLE_NAME, null);
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         mCount.close();
+
+        db.close();
 
         return count;
     }
@@ -170,34 +192,42 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     public int getMenuQtn(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(DB_TABLE,
-                new String[]{"quantity"},
-                "menuId = ?",
+        Cursor cursor = db.query(TABLE_NAME,
+                new String[]{COLUMN_quantity},
+                COLUMN_menuId + " = ?",
                 new String[]{id_str},
                 null, null, null, null);
         if (cursor.moveToFirst()) {
             //recordexist
             int count= cursor.getInt(0);
             cursor.close();
+            db.close();
             return count;
         } else {
             //record not existing
             int count= 1;
             cursor.close();
+            db.close();
             return count;
         }
     }
 
     public int sumPriceCartItems() {
-        String priceCol = "price";
-        String quantityCol = "quantity";
         int result = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select sum("+ priceCol + " * " + quantityCol + ") from " + DB_TABLE, null);
+        Cursor cursor = db.rawQuery("select sum("+ COLUMN_price + " * " + COLUMN_quantity + ") from " + TABLE_NAME, null);
         if (cursor.moveToFirst()) result = cursor.getInt(0);
         cursor.close();
         db.close();
         return result;
+    }
+
+
+    public Cursor getUnsyncedMenuItem() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_order_status + " = 0;";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
     }
 
 

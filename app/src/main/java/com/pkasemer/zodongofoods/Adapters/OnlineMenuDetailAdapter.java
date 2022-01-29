@@ -62,6 +62,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
 
+    public static final int MENU_SYNCED_WITH_SERVER = 1;
+    public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
+
 
     private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
     private Context context;
@@ -240,7 +243,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     selectedCategoryMenuItemResult.getCreated(),
                                     selectedCategoryMenuItemResult.getModified(),
                                     selectedCategoryMenuItemResult.getRating(),
-                                    minteger
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
                             );
 
 
@@ -293,7 +297,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     selectedCategoryMenuItemResult.getCreated(),
                                     selectedCategoryMenuItemResult.getModified(),
                                     selectedCategoryMenuItemResult.getRating(),
-                                    minteger
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
                             );
 
 
@@ -346,7 +351,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     selectedCategoryMenuItemResult.getCreated(),
                                     selectedCategoryMenuItemResult.getModified(),
                                     selectedCategoryMenuItemResult.getRating(),
-                                    minteger
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
                             );
 
 
@@ -471,7 +477,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     selectedCategoryMenuItemResult.getCreated(),
                                     selectedCategoryMenuItemResult.getModified(),
                                     selectedCategoryMenuItemResult.getRating(),
-                                    minteger
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
                             );
 
 
@@ -514,7 +521,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     selectedCategoryMenuItemResult.getCreated(),
                                     selectedCategoryMenuItemResult.getModified(),
                                     selectedCategoryMenuItemResult.getRating(),
-                                    minteger
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
                             );
                             movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
                             movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));

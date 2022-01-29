@@ -3,34 +3,24 @@ package com.pkasemer.zodongofoods;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.pkasemer.zodongofoods.Adapters.CartAdapter;
-import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.HttpRequests.RequestHandler;
+import com.pkasemer.zodongofoods.HttpRequests.URLs;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
-import com.pkasemer.zodongofoods.Models.Pk;
-import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
-import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
-import java.util.List;
-import java.util.concurrent.TimeoutException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.HashMap;
+import java.util.List;
 
 public class PlaceOrder extends AppCompatActivity {
 
@@ -40,7 +30,7 @@ public class PlaceOrder extends AppCompatActivity {
     List<FoodDBModel> cartitemlist;
 
     ProgressBar placeorder_main_progress;
-    
+
     Button btnCheckout;
 
     @Override
@@ -57,143 +47,89 @@ public class PlaceOrder extends AppCompatActivity {
         cartitemlist = db.listTweetsBD();
 
         btnCheckout = findViewById(R.id.btnCheckout);
-        placeorder_main_progress = (ProgressBar)findViewById(R.id.placeorder_main_progress);
+        placeorder_main_progress = (ProgressBar) findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
 
         //init service and load data
-        movieService = MovieApi.getClient(PlaceOrder.this).create(MovieService.class);
-        
-        
+
+
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (cartitemlist.size() > 0) {
-                    placeorder_main_progress.setVisibility(View.VISIBLE);
-                    loadFirstPage();
-                } else {
-//                    emptycartwarning();
+
+                    Cursor cursor = db.getUnsyncedMenuItem();
+                    if (cursor.moveToFirst()) {
+                        do {
+                            //calling the method to save the unsynced name to MySQL
+                            saveName(
+                                    cursor.getInt(cursor.getColumnIndex(SenseDBHelper.COLUMN_id)),
+                                    cursor.getString(cursor.getColumnIndex(SenseDBHelper.COLUMN_menuName))
+                            );
+                        } while (cursor.moveToNext());
+                    }
+
+
                 }
 
 
             }
         });
     }
-    
-    
 
-    
-    private void loadFirstPage() {
 
-        // To ensure list is visible when retry button in error view is clicked
-        hideErrorView();
+    private void saveName(final int id, final String name) {
 
-        postPlaceOrderItems().enqueue(new Callback<FoodDBModel>() {
+
+        class NamePostRequest extends AsyncTask<Void, Void, String> {
+
             @Override
-            public void onResponse(Call<FoodDBModel> call, Response<FoodDBModel> response) {
-                hideErrorView();
-                placeorder_main_progress.setVisibility(View.GONE);
-                Log.v("SUCCESS", response.body() + " " + cartitemlist);
-                
+            protected void onPreExecute() {
+                super.onPreExecute();
+                placeorder_main_progress.setVisibility(View.VISIBLE);
+
             }
 
             @Override
-            public void onFailure(Call<FoodDBModel> call, Throwable t) {
-                t.printStackTrace();
-//                showErrorView(t);
-                placeorder_main_progress.setVisibility(View.GONE);
-                Toast.makeText(PlaceOrder.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
 
-    private Call<FoodDBModel> postPlaceOrderItems(){
-        return  movieService.postOrderItems(
-                cartitemlist
-        );
-    }
+                if (s.isEmpty()) {
+                    return;
+                }
 
+                try {
+                    //converting response to json object
+                    JSONObject obj = new JSONObject(s);
 
-    /**
-     * @param throwable required for {@link #fetchErrorMessage(Throwable)}
-     * @return
-     */
-    private void showErrorView(Throwable throwable) {
+                    //if no error in response
+                    if (!obj.getBoolean("error")) {
+                        placeorder_main_progress.setVisibility(View.GONE);
 
-//        if (errorLayout.getVisibility() == View.GONE) {
-//            errorLayout.setVisibility(View.VISIBLE);
-//            progressBar.setVisibility(View.GONE);
-//
-//            txtError.setText(fetchErrorMessage(throwable));
-//        }
-    }
-
-    private void showCategoryErrorView() {
-
-//        progressBar.setVisibility(View.GONE);
-
-        AlertDialog.Builder android = new AlertDialog.Builder(PlaceOrder.this);
-        android.setTitle("Coming Soon");
-        android.setIcon(R.drawable.africanwoman);
-        android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
-                .setCancelable(false)
-
-                .setPositiveButton("Home", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //go to activity
-                        Intent intent = new Intent(PlaceOrder.this, RootActivity.class);
-                        startActivity(intent);
                     }
-                });
-        android.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //go to activity
-                Intent intent = new Intent(PlaceOrder.this, RootActivity.class);
-                startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        });
-        android.create().show();
 
-    }
+            @Override
+            protected String doInBackground(Void... voids) {
+                //creating request handler object
+                RequestHandler requestHandler = new RequestHandler();
 
+                //creating request parameters
+                HashMap<String, String> params = new HashMap<>();
+                params.put("name", name);
 
-
-    /**
-     * @param throwable to identify the type of error
-     * @return appropriate error message
-     */
-    private String fetchErrorMessage(Throwable throwable) {
-        String errorMsg = getResources().getString(R.string.error_msg_unknown);
-
-        if (!isNetworkConnected()) {
-            errorMsg = getResources().getString(R.string.error_msg_no_internet);
-        } else if (throwable instanceof TimeoutException) {
-            errorMsg = getResources().getString(R.string.error_msg_timeout);
+                //returing the response
+                return requestHandler.sendPostRequest(URLs.URL_SENDNAME, params);
+            }
         }
 
-        return errorMsg;
+        NamePostRequest ul = new NamePostRequest();
+        ul.execute();
     }
 
-    // Helpers -------------------------------------------------------------------------------------
-
-
-    private void hideErrorView() {
-//        if (errorLayout.getVisibility() == View.VISIBLE) {
-//            errorLayout.setVisibility(View.GONE);
-//            progressBar.setVisibility(View.VISIBLE);
-//        }
-    }
-
-    /**
-     * Remember to add android.permission.ACCESS_NETWORK_STATE permission.
-     *
-     * @return
-     */
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) PlaceOrder.this.getSystemService(PlaceOrder.this.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-    }
 
 }

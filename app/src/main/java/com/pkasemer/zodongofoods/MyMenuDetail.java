@@ -66,6 +66,7 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
     ActionBar actionBar;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
