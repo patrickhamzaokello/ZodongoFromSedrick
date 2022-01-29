@@ -104,7 +104,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="CHANGE"
-                    android:textColor="@color/buttonRed"
+                    android:textColor="@color/light_grey"
                     android:textSize="12sp" />
 
 
@@ -166,7 +166,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="CHANGE"
-                    android:textColor="@color/buttonRed"
+                    android:textColor="@color/light_grey"
                     android:textSize="12sp" />
 
 
@@ -339,6 +339,16 @@
                 android:textSize="15dp" />
 
         </LinearLayout>
+
+
+        <ProgressBar
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/placeorder_main_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
     </RelativeLayout>
 

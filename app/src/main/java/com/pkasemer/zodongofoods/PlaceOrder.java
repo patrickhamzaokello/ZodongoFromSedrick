@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pkasemer.zodongofoods.Adapters.CartAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
+import com.pkasemer.zodongofoods.Models.Pk;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
@@ -36,6 +38,8 @@ public class PlaceOrder extends AppCompatActivity {
     private SenseDBHelper db;
     boolean food_db_itemchecker;
     List<FoodDBModel> cartitemlist;
+
+    ProgressBar placeorder_main_progress;
     
     Button btnCheckout;
 
@@ -53,6 +57,8 @@ public class PlaceOrder extends AppCompatActivity {
         cartitemlist = db.listTweetsBD();
 
         btnCheckout = findViewById(R.id.btnCheckout);
+        placeorder_main_progress = (ProgressBar)findViewById(R.id.placeorder_main_progress);
+        placeorder_main_progress.setVisibility(View.GONE);
 
         //init service and load data
         movieService = MovieApi.getClient(PlaceOrder.this).create(MovieService.class);
@@ -63,6 +69,7 @@ public class PlaceOrder extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (cartitemlist.size() > 0) {
+                    placeorder_main_progress.setVisibility(View.VISIBLE);
                     loadFirstPage();
                 } else {
 //                    emptycartwarning();
@@ -81,31 +88,31 @@ public class PlaceOrder extends AppCompatActivity {
         // To ensure list is visible when retry button in error view is clicked
         hideErrorView();
 
-        placeUserOrder().enqueue(new Callback<ResponseBody>() {
+        postPlaceOrderItems().enqueue(new Callback<FoodDBModel>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<FoodDBModel> call, Response<FoodDBModel> response) {
                 hideErrorView();
-
+                placeorder_main_progress.setVisibility(View.GONE);
                 Log.v("SUCCESS", response.body() + " " + cartitemlist);
                 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<FoodDBModel> call, Throwable t) {
                 t.printStackTrace();
 //                showErrorView(t);
+                placeorder_main_progress.setVisibility(View.GONE);
                 Toast.makeText(PlaceOrder.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-
-    private Call<ResponseBody> placeUserOrder(){
-        return  movieService.postCartItems(
+    private Call<FoodDBModel> postPlaceOrderItems(){
+        return  movieService.postOrderItems(
                 cartitemlist
         );
     }
+
 
     /**
      * @param throwable required for {@link #fetchErrorMessage(Throwable)}

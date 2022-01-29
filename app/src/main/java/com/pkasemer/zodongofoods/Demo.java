@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +24,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.pkasemer.zodongofoods.Adapters.NameAdapter;
+import com.pkasemer.zodongofoods.HelperClasses.SharedPrefManager;
+import com.pkasemer.zodongofoods.HttpRequests.RequestHandler;
+import com.pkasemer.zodongofoods.HttpRequests.URLs;
 import com.pkasemer.zodongofoods.Models.Name;
+import com.pkasemer.zodongofoods.Models.UserModel;
 import com.pkasemer.zodongofoods.Singletons.VolleySingleton;
 import com.pkasemer.zodongofoods.Utils.NetworkStateChecker;
 import com.pkasemer.zodongofoods.localDatabase.DatabaseHelper;
@@ -34,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class Demo extends  AppCompatActivity implements View.OnClickListener {
 
     /*
@@ -41,7 +50,6 @@ public class Demo extends  AppCompatActivity implements View.OnClickListener {
      * make sure you are using the ip instead of localhost
      * it will not work if you are using localhost
      * */
-    public static final String URL_SAVE_NAME = "https://68c0-41-75-189-66.ngrok.io/ZodongoFoodsAPI/menus/demo.php";
 
     //database helper object
     private DatabaseHelper db;
@@ -133,52 +141,75 @@ public class Demo extends  AppCompatActivity implements View.OnClickListener {
     /*
      * this method is saving the name to ther server
      * */
-    private void saveNameToServer() {
+
+    private void saveNameToServer(){
+
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Saving Name...");
-        progressDialog.show();
+
 
         final String name = editTextName.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_NAME,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if (!obj.getBoolean("error")) {
-                                //if there is a success
-                                //storing the name to sqlite with status synced
-                                saveNameToLocalStorage(name, NAME_SYNCED_WITH_SERVER);
-                            } else {
-                                //if there is some error
-                                //saving the name to sqlite with status unsynced
-                                saveNameToLocalStorage(name, NAME_NOT_SYNCED_WITH_SERVER);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        //on error storing the name to sqlite with status unsynced
-                        saveNameToLocalStorage(name, NAME_NOT_SYNCED_WITH_SERVER);
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", name);
-                return params;
-            }
-        };
 
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        class NamePostRequest extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog.setMessage("Saving Name...");
+                progressDialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                progressDialog.dismiss();
+
+                if(s.isEmpty()){
+                    //show network error
+                    progressDialog.dismiss();
+                    //on error storing the name to sqlite with status unsynced
+                    saveNameToLocalStorage(name, NAME_NOT_SYNCED_WITH_SERVER);
+                    return;
+                }
+
+                try {
+                    //converting response to json object
+                    JSONObject obj = new JSONObject(s);
+
+                    //if no error in response
+                    if (!obj.getBoolean("error")) {
+                        saveNameToLocalStorage(name, NAME_SYNCED_WITH_SERVER);
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        //Invalid Username or Password
+                        saveNameToLocalStorage(name, NAME_NOT_SYNCED_WITH_SERVER);
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                //creating request handler object
+                RequestHandler requestHandler = new RequestHandler();
+
+                //creating request parameters
+                HashMap<String, String> params = new HashMap<>();
+                params.put("name", name);
+
+                //returing the response
+                return requestHandler.sendPostRequest(URLs.URL_SENDNAME, params);
+            }
+        }
+
+        NamePostRequest ul = new NamePostRequest();
+        ul.execute();
     }
+
+
 
     //saving the name to local storage
     private void saveNameToLocalStorage(String name, int status) {
@@ -188,6 +219,7 @@ public class Demo extends  AppCompatActivity implements View.OnClickListener {
         names.add(n);
         refreshList();
     }
+
 
     @Override
     public void onClick(View view) {

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.pkasemer.zodongofoods.Demo;
+import com.pkasemer.zodongofoods.HttpRequests.RequestHandler;
+import com.pkasemer.zodongofoods.HttpRequests.URLs;
 import com.pkasemer.zodongofoods.Singletons.VolleySingleton;
 import com.pkasemer.zodongofoods.localDatabase.DatabaseHelper;
 
@@ -66,39 +70,55 @@ public class NetworkStateChecker extends BroadcastReceiver {
      * we will update the status as synced in SQLite
      * */
     private void saveName(final int id, final String name) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Demo.URL_SAVE_NAME,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if (!obj.getBoolean("error")) {
-                                //updating the status in sqlite
-                                db.updateNameStatus(id, Demo.NAME_SYNCED_WITH_SERVER);
 
-                                //sending the broadcast to refresh the list
-                                context.sendBroadcast(new Intent(Demo.DATA_SAVED_BROADCAST));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+        class NamePostRequest extends AsyncTask<Void, Void, String> {
 
-                    }
-                }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", name);
-                return params;
+            protected void onPreExecute() {
+                super.onPreExecute();
             }
-        };
 
-        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                if(s.isEmpty()){
+                    return;
+                }
+
+                try {
+                    //converting response to json object
+                    JSONObject obj = new JSONObject(s);
+
+                    //if no error in response
+                    if (!obj.getBoolean("error")) {
+                        //updating the status in sqlite
+                        db.updateNameStatus(id, Demo.NAME_SYNCED_WITH_SERVER);
+
+                        //sending the broadcast to refresh the list
+                        context.sendBroadcast(new Intent(Demo.DATA_SAVED_BROADCAST));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                //creating request handler object
+                RequestHandler requestHandler = new RequestHandler();
+
+                //creating request parameters
+                HashMap<String, String> params = new HashMap<>();
+                params.put("name", name);
+
+                //returing the response
+                return requestHandler.sendPostRequest(URLs.URL_SENDNAME, params);
+            }
+        }
+
+        NamePostRequest ul = new NamePostRequest();
+        ul.execute();
     }
 
 }
