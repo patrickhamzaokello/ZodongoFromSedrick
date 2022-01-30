@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_toLeftOf="@id/ChangeButton"
+                    android:layout_toLeftOf="@id/btn_change_location"
                     android:layout_toRightOf="@+id/PlaceOrdericon"
                     android:orientation="vertical">
 
@@ -98,7 +98,7 @@
 
 
                 <TextView
-                    android:id="@+id/ChangeButton"
+                    android:id="@+id/btn_change_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

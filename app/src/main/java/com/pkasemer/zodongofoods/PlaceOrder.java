@@ -1,9 +1,12 @@
 package com.pkasemer.zodongofoods;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
@@ -36,7 +40,7 @@ public class PlaceOrder extends AppCompatActivity {
 
     ProgressBar placeorder_main_progress;
     OrderRequest orderRequest = new OrderRequest();
-    TextView grandsubvalue, grandshipvalue,grandtotalvalue;
+    TextView btn_change_location, grandsubvalue, grandshipvalue,grandtotalvalue;
 
     Button btnCheckout;
 
@@ -54,6 +58,7 @@ public class PlaceOrder extends AppCompatActivity {
         db = new SenseDBHelper(PlaceOrder.this);
         cartitemlist = db.listTweetsBD();
 
+        btn_change_location = findViewById(R.id.btn_change_location);
         btnCheckout = findViewById(R.id.btnCheckout);
         grandsubvalue = findViewById(R.id.grandsubvalue);
         grandshipvalue = findViewById(R.id.grandshipvalue);
@@ -70,6 +75,15 @@ public class PlaceOrder extends AppCompatActivity {
         orderRequest.setOrderStatus("1");
         orderRequest.setProcessedBy("1");
         orderRequest.setOrderItemList(cartitemlist);
+
+        btn_change_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChangeLocation changeLocation = new ChangeLocation();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                changeLocation.show(ft,"dialog");
+            }
+        });
 
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +146,8 @@ public class PlaceOrder extends AppCompatActivity {
         intent.putExtra(getApplicationContext().getResources().getString(R.string.cartCount), mycartcount);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
+
+
 
 
 }
