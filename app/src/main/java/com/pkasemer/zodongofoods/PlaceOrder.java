@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
+import com.pkasemer.zodongofoods.Dialogs.ChangePaymentMethod;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
@@ -43,7 +44,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
     ProgressBar placeorder_main_progress;
     OrderRequest orderRequest = new OrderRequest();
-    TextView btn_change_location, grandsubvalue, grandshipvalue,grandtotalvalue;
+    TextView btn_change_location,moneyChangeButton, grandsubvalue, grandshipvalue,grandtotalvalue;
 
     Button btnCheckout;
 
@@ -62,6 +63,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         cartitemlist = db.listTweetsBD();
 
         btn_change_location = findViewById(R.id.btn_change_location);
+        moneyChangeButton = findViewById(R.id.moneyChangeButton);
         btnCheckout = findViewById(R.id.btnCheckout);
         grandsubvalue = findViewById(R.id.grandsubvalue);
         grandshipvalue = findViewById(R.id.grandshipvalue);
@@ -84,6 +86,14 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             public void onClick(View view) {
                 ChangeLocation changeLocation = new ChangeLocation();
                 changeLocation.show(getSupportFragmentManager(),"change Location");
+            }
+        });
+
+        moneyChangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChangePaymentMethod changePaymentMethod = new ChangePaymentMethod();
+                changePaymentMethod.show(getSupportFragmentManager(),"change payment method");
             }
         });
 
@@ -144,10 +154,11 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation) {
+    public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation, TextInputEditText inputUserNewPhone) {
 
         String name = inputUserNewLocation.getText().toString();
-        Log.i("dialog", "Positive Method2: " + name);
+        String phone = inputUserNewPhone.getText().toString();
+        Log.i("dialog", "Positive Method2: " + name + "-"+ phone);
     }
 
     @Override

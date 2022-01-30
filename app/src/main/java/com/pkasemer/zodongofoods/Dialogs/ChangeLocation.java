@@ -17,14 +17,14 @@ import com.pkasemer.zodongofoods.R;
 public class ChangeLocation extends DialogFragment {
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation);
+        public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation,TextInputEditText inputUserNewPhone);
 
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
     NoticeDialogListener listener;
-    public TextInputEditText inputUserNewLocation;
+    public TextInputEditText inputUserNewLocation,inputUserNewPhone;
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
@@ -53,6 +53,8 @@ public class ChangeLocation extends DialogFragment {
 
         View view = inflater.inflate(R.layout.dialog_change_location, null);
         inputUserNewLocation = (TextInputEditText) view.findViewById(R.id.inputUserNewLocation);
+        inputUserNewPhone = (TextInputEditText) view.findViewById(R.id.inputUserNewPhone);
+
 
         builder.setView(view)
                 // Add action buttons
@@ -60,7 +62,7 @@ public class ChangeLocation extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // sign in the user ...
-                        listener.onDialogPositiveClick(ChangeLocation.this, inputUserNewLocation);
+                        listener.onDialogPositiveClick(ChangeLocation.this, inputUserNewLocation, inputUserNewPhone);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
