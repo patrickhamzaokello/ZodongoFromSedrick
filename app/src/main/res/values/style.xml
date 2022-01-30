@@ -32,4 +32,11 @@
         <item name="colorAccent">@color/purple_700</item>
     </style>
 
+
+    <style name="GreenBtn" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#1A8E1E</item>
+        <item name="colorPrimaryDark">#1A8E1E</item>
+        <item name="colorAccent">#1A8E1E</item>
+    </style>
+
 </resources>

@@ -22,6 +22,7 @@ import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
 import com.pkasemer.zodongofoods.Dialogs.ChangePaymentMethod;
+import com.pkasemer.zodongofoods.Dialogs.OrderConfirmationDialog;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
@@ -113,9 +114,14 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                         if (response.code() == 201) {
                             Log.i("Order Success", "Order Created: ");
                             db.clearCart();
+                            updatecartCount();
+                            OrderTotalling();
 
-                            Intent i = new Intent(PlaceOrder.this, RootActivity.class);
-                            startActivity(i);
+                            OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
+                            orderConfirmationDialog.show(getSupportFragmentManager(),"Order Confirmation Dialog");
+
+//                            Intent i = new Intent(PlaceOrder.this, RootActivity.class);
+//                            startActivity(i);
 
                         } else {
                             Log.i("Order Failed", "Order Failed Try Again: ");
@@ -150,6 +156,14 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         grandshipvalue.setText("2000");
         grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems() + 2000));
     }
+
+    private void updatecartCount() {
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(getApplicationContext().getResources().getString(R.string.cartcoutAction));
+        intent.putExtra(getApplicationContext().getResources().getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
 
 
 

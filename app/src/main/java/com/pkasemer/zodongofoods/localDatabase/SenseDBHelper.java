@@ -158,7 +158,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     public void clearCart() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, COLUMN_order_status  + " = 0", null);
+        db.delete(TABLE_NAME, null, null);
         db.close();
     }
 
