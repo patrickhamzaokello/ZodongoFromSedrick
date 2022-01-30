@@ -3,6 +3,7 @@ package com.pkasemer.zodongofoods;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -14,7 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
@@ -31,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlaceOrder extends AppCompatActivity {
+public class PlaceOrder extends AppCompatActivity implements ChangeLocation.NoticeDialogListener {
 
     private MovieService movieService;
     private SenseDBHelper db;
@@ -139,14 +142,16 @@ public class PlaceOrder extends AppCompatActivity {
     }
 
 
-    private void updatecartCount() {
-        String mycartcount = String.valueOf(db.countCart());
-        Intent intent = new Intent(getApplicationContext().getResources().getString(R.string.cartcoutAction));
-        intent.putExtra(getApplicationContext().getResources().getString(R.string.cartCount), mycartcount);
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation) {
+
+        String name = inputUserNewLocation.getText().toString();
+        Log.i("dialog", "Positive Method2: " + name);
     }
 
-
-
-
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Log.i("dialog", "Negative: ");
+    }
 }
