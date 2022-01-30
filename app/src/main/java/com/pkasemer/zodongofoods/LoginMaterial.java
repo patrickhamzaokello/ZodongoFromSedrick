@@ -160,9 +160,12 @@ public class LoginMaterial extends AppCompatActivity {
                         //creating a new user object
                         UserModel userModel = new UserModel(
                                 userJson.getInt("id"),
+                                userJson.getString("fullname"),
                                 userJson.getString("username"),
                                 userJson.getString("email"),
-                                userJson.getString("gender")
+                                userJson.getString("phone"),
+                                userJson.getString("address"),
+                                userJson.getString("profileimage")
                         );
 
                         //storing the user in shared preferences

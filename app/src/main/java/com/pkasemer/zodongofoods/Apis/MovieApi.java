@@ -61,7 +61,7 @@ public class MovieApi {
             retrofit = new Retrofit.Builder()
                     .client(buildClient(context))
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("https://8f2c-41-75-189-25.ngrok.io/ZodongoFoodsAPI/")
+                    .baseUrl("https://ac99-41-75-188-97.ngrok.io/ZodongoFoodsAPI/")
 //                    .baseUrl("http://pk.kakebe.com/ZodongoFoods/")
                     .build();
         }
