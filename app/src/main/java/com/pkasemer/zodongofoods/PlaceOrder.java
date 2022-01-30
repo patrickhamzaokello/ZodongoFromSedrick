@@ -3,36 +3,19 @@ package com.pkasemer.zodongofoods;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
-import com.pkasemer.zodongofoods.HttpRequests.RequestHandler;
-import com.pkasemer.zodongofoods.HttpRequests.URLs;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
-import com.pkasemer.zodongofoods.Models.OrderItem;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
-import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
-import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
