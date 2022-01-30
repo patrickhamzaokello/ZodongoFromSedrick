@@ -428,7 +428,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCheckout"
+            android:id="@+id/btnOrderNow"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -2,12 +2,15 @@ package com.pkasemer.zodongofoods;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
@@ -15,7 +18,9 @@ import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,6 +36,7 @@ public class PlaceOrder extends AppCompatActivity {
 
     ProgressBar placeorder_main_progress;
     OrderRequest orderRequest = new OrderRequest();
+    TextView grandsubvalue, grandshipvalue,grandtotalvalue;
 
     Button btnCheckout;
 
@@ -49,12 +55,17 @@ public class PlaceOrder extends AppCompatActivity {
         cartitemlist = db.listTweetsBD();
 
         btnCheckout = findViewById(R.id.btnCheckout);
+        grandsubvalue = findViewById(R.id.grandsubvalue);
+        grandshipvalue = findViewById(R.id.grandshipvalue);
+        grandtotalvalue = findViewById(R.id.grandtotalvalue);
         placeorder_main_progress = (ProgressBar) findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
 
+        OrderTotalling();
+
 
         orderRequest.setOrderAddress("MK45678901098");
-        orderRequest.setCustomerId("zd1246528");
+        orderRequest.setCustomerId("2");
         orderRequest.setTotalAmount("23000");
         orderRequest.setOrderStatus("1");
         orderRequest.setProcessedBy("1");
@@ -75,6 +86,11 @@ public class PlaceOrder extends AppCompatActivity {
 
                         if (response.code() == 201) {
                             Log.i("Order Success", "Order Created: ");
+                            db.clearCart();
+
+                            Intent i = new Intent(PlaceOrder.this, RootActivity.class);
+                            startActivity(i);
+
                         } else {
                             Log.i("Order Failed", "Order Failed Try Again: ");
                         }
@@ -100,6 +116,21 @@ public class PlaceOrder extends AppCompatActivity {
 
     private Call<ResponseBody> postAllCartItems() {
         return movieService.postCartOrder(orderRequest);
+    }
+
+
+    public void OrderTotalling() {
+        grandsubvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
+        grandshipvalue.setText("2000");
+        grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems() + 2000));
+    }
+
+
+    private void updatecartCount() {
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(getApplicationContext().getResources().getString(R.string.cartcoutAction));
+        intent.putExtra(getApplicationContext().getResources().getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
 

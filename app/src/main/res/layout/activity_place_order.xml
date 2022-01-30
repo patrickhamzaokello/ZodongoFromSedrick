@@ -256,8 +256,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="2,000"
                         android:includeFontPadding="false"
+                        android:text="2,000"
 
                         android:textColor="@color/light_grey"
                         android:textSize="15dp" />

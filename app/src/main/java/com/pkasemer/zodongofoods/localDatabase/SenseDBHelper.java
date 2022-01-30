@@ -156,6 +156,12 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void clearCart() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_order_status  + " = 0", null);
+        db.close();
+    }
+
     public boolean checktweetindb(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
@@ -225,7 +231,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     public Cursor getUnsyncedMenuItem() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_order_status + " = 0;";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_order_status + " = 0";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }

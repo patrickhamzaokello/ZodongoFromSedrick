@@ -35,6 +35,7 @@ import com.google.android.material.button.MaterialButton;
 import com.pkasemer.zodongofoods.Fragments.Cart;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.zodongofoods.MyMenuDetail;
+import com.pkasemer.zodongofoods.PlaceOrder;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
@@ -218,6 +219,51 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             display(minteger,heroVh,selectedCategoryMenuItemResult);
                         } else {
                             display(minteger,heroVh,selectedCategoryMenuItemResult);
+                        }
+                    }
+                });
+
+                heroVh.btnOrderNow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
+                            );
+
+
+                            updatecartCount();
+
+
+                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                            //PACK DATA
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+
+
+                        } else {
+                            updatecartCount();
+                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                            //PACK DATA
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
                         }
                     }
                 });
@@ -719,7 +765,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     protected class HeroVH extends RecyclerView.ViewHolder {
         private ImageView menu_image;
         private TextView menu_name, menu_shortinfo, menu_description, ratingnumber, menu_price, menu_qtn, itemQuanEt, menu_total_price;
-        private Button incrementQtn, decreaseQtn, btnAddtoCart, menu_detail_st_cartbtn, menu_detail_st_likebtn;
+        private Button incrementQtn, decreaseQtn, btnAddtoCart,btnOrderNow, menu_detail_st_cartbtn, menu_detail_st_likebtn;
         private ProgressBar mProgress;
 
 
@@ -738,6 +784,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             incrementQtn = itemView.findViewById(R.id.addBtn);
             decreaseQtn = itemView.findViewById(R.id.removeBtn);
             btnAddtoCart = (MaterialButton) itemView.findViewById(R.id.btnAddtoCart);
+            btnOrderNow =  (MaterialButton) itemView.findViewById(R.id.btnOrderNow);
 
             menu_detail_st_cartbtn = itemView.findViewById(R.id.menu_detail_st_cartbtn);
             menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
