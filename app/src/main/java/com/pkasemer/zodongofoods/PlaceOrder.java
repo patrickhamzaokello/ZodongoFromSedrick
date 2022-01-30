@@ -70,16 +70,25 @@ public class PlaceOrder extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.i("Ress", "onResponse: " + (response.body()));
+                        Log.i("Ress", "onResponse: " + (response.code()));
+                        placeorder_main_progress.setVisibility(View.GONE);
+
+                        if (response.code() == 201) {
+                            Log.i("Order Success", "Order Created: ");
+                        } else {
+                            Log.i("Order Failed", "Order Failed Try Again: ");
+                        }
 
                         // Got data. Send it to adapter
-                        placeorder_main_progress.setVisibility(View.GONE);
 
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        placeorder_main_progress.setVisibility(View.GONE);
+
                         t.printStackTrace();
+                        Log.i("Order Failed", "Order Failed Try Again: " + t);
                     }
                 });
             }
