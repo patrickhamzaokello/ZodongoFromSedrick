@@ -29,6 +29,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/order_page_fullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -37,8 +38,19 @@
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
+            <TextView
+                android:id="@+id/order_page_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:includeFontPadding="false"
+                android:text="pkasemer"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
 
             <TextView
+                android:id="@+id/order_page_phoneno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -85,12 +97,13 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/location_address_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:includeFontPadding="false"
                         android:text="Obote Avenue, 3rd Drive Road"
-                        android:textColor="@color/black"
+                        android:textColor="@color/order_locationcolor"
                         android:textSize="13sp" />
 
 
@@ -104,7 +117,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="CHANGE"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/changebtn"
                     android:textSize="12sp" />
 
 
@@ -166,7 +179,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="CHANGE"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/changebtn"
                     android:textSize="12sp" />
 
 

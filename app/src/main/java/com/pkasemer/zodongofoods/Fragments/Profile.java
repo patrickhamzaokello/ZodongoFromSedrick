@@ -18,7 +18,7 @@ import com.pkasemer.zodongofoods.R;
 public class Profile extends Fragment {
 
 
-    TextView textViewUsername, textViewEmail;
+    TextView textViewUsername, textViewEmail,address_text,full_name_text,card_email_text,card_address_text,card_phone_text;
 
     public Profile() {
         // Required empty public constructor
@@ -49,7 +49,13 @@ public class Profile extends Fragment {
 
         textViewUsername = (TextView) view.findViewById(R.id.full_name);
         textViewEmail = (TextView) view.findViewById(R.id.email_text);
+        address_text = (TextView) view.findViewById(R.id.address_text);
 
+
+        full_name_text = (TextView) view.findViewById(R.id.full_name_text);
+        card_email_text = (TextView) view.findViewById(R.id.card_email_text);
+        card_address_text = (TextView) view.findViewById(R.id.card_address_text);
+        card_phone_text = (TextView) view.findViewById(R.id.card_phone_text);
 
         //getting the current user
         UserModel userModel = SharedPrefManager.getInstance(getContext()).getUser();
@@ -57,6 +63,14 @@ public class Profile extends Fragment {
         //setting the values to the textviews
         textViewUsername.setText(userModel.getUsername());
         textViewEmail.setText(userModel.getEmail());
+        address_text.setText("Location: " + userModel.getAddress());
+
+
+        full_name_text.setText(userModel.getFullname());
+        card_email_text.setText(userModel.getEmail());
+        card_address_text.setText(userModel.getAddress());
+        card_phone_text.setText(userModel.getPhone());
+
 
         //when the user presses logout button
         //calling the logout method

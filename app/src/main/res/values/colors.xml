@@ -22,8 +22,13 @@
     <color name="green3">#D9564A</color>
     <color name="green4">#D96B43</color>
 
+    <color name="changebtn">#FF0000</color>
+    <color name="order_locationcolor">#066B1B</color>
 
-    <color name="mygreen">#F29F05</color>
+
+
+    <color name="mygreen">#064025</color>
+    <color name="profilecards">#fff</color>
 
     <color name="sweetRed">#FF0012</color>
     <color name="buttonRed">#CE2630</color>

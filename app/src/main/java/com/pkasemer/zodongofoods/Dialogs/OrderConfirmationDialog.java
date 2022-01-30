@@ -10,11 +10,18 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.zodongofoods.R;
 
 public class OrderConfirmationDialog extends DialogFragment {
 
+    public interface OrderConfirmLister {
+        public void onOrderDialogPositiveClick(DialogFragment dialog);
 
+    }
+
+    // Use this instance of the interface to deliver action events
+    OrderConfirmationDialog.OrderConfirmLister listener;
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
@@ -23,6 +30,7 @@ public class OrderConfirmationDialog extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
+            listener = (OrderConfirmationDialog.OrderConfirmLister) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getActivity().toString()
@@ -42,8 +50,16 @@ public class OrderConfirmationDialog extends DialogFragment {
 
         View view = inflater.inflate(R.layout.dialog_order_confirmation, null);
 
-        builder.setView(view);
-                // Add action buttons
+        builder.setView(view)
+        // Add action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // sign in the user ...
+                listener.onOrderDialogPositiveClick(OrderConfirmationDialog.this);
+
+            }
+        });
 
         return builder.create();
     }

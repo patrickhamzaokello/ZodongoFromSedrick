@@ -76,36 +76,5 @@
 
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnViewOrder"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Order"
-        android:layout_marginHorizontal="20dp"
-        android:textColor="@color/purple_500"
-        android:transitionName="account_change"
-        app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="@color/purple_500"
-        app:strokeWidth="1dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnStartOrder"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:layout_marginBottom="40dp"
-        android:text="Start New Order"
-        app:iconTint="@color/white"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:strokeWidth="0dp" />
-
-
 
 </LinearLayout>
