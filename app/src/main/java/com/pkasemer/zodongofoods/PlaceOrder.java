@@ -131,7 +131,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                         Log.i("Ress", "onResponse: " + (response.code()));
                         placeorder_main_progress.setVisibility(View.GONE);
 
-                        if (response.code() == 201) {
+                        if (response.code() == 200) {
                             Log.i("Order Success", "Order Created: ");
                             db.clearCart();
                             updatecartCount();
