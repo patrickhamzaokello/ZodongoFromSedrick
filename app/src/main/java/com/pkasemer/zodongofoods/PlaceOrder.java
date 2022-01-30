@@ -80,8 +80,7 @@ public class PlaceOrder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ChangeLocation changeLocation = new ChangeLocation();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                changeLocation.show(ft,"dialog");
+                changeLocation.show(getSupportFragmentManager(),"change Location");
             }
         });
 

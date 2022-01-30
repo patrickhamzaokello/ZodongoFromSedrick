@@ -1,33 +1,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <ImageView
-        android:src="@drawable/africanwoman"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:scaleType="center"
         android:background="#FFFFBB33"
-        android:contentDescription="@string/app_name" />
-    <EditText
-        android:id="@+id/username"
-        android:inputType="textEmailAddress"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/staticmap" />
+
+    <TextView
+        android:id="@+id/section_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="Username" />
-    <EditText
-        android:id="@+id/password"
-        android:inputType="textPassword"
+        android:layout_alignBaseline="@+id/section_show_all_button"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:includeFontPadding="false"
+        android:layout_marginHorizontal="20dp"
+        android:paddingHorizontal="10dp"
+        android:text="New Delivery Address"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/section_label_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif"
-        android:hint="Password"/>
+        android:layout_below="@+id/section_label"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginHorizontal="20dp"
+
+        android:includeFontPadding="false"
+        android:paddingHorizontal="10dp"
+        android:text="Your order will be delivered here"
+        android:textColor="@color/light_black"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeErrorColor="@color/purple_500"
+        app:hintTextColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Location"
+        android:textColorHint="@color/black"
+        android:layout_margin="20dp"
+        android:transitionName="username_input">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/black" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>
