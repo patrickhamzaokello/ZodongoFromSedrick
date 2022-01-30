@@ -1,9 +1,7 @@
 package com.pkasemer.zodongofoods.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-public class FoodDBModel  implements Parcelable {
+public class FoodDBModel {
 
     private Integer menuId;
 
@@ -50,57 +48,6 @@ public class FoodDBModel  implements Parcelable {
         this.orderstatus = orderstatus;
     }
 
-    protected FoodDBModel(Parcel in) {
-        if (in.readByte() == 0) {
-            menuId = null;
-        } else {
-            menuId = in.readInt();
-        }
-        menuName = in.readString();
-        if (in.readByte() == 0) {
-            price = null;
-        } else {
-            price = in.readInt();
-        }
-        description = in.readString();
-        if (in.readByte() == 0) {
-            menuTypeId = null;
-        } else {
-            menuTypeId = in.readInt();
-        }
-        menuImage = in.readString();
-        backgroundImage = in.readString();
-        ingredients = in.readString();
-        if (in.readByte() == 0) {
-            menuStatus = null;
-        } else {
-            menuStatus = in.readInt();
-        }
-        created = in.readString();
-        modified = in.readString();
-        if (in.readByte() == 0) {
-            rating = null;
-        } else {
-            rating = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            quantity = null;
-        } else {
-            quantity = in.readInt();
-        }
-    }
-
-    public static final Creator<FoodDBModel> CREATOR = new Creator<FoodDBModel>() {
-        @Override
-        public FoodDBModel createFromParcel(Parcel in) {
-            return new FoodDBModel(in);
-        }
-
-        @Override
-        public FoodDBModel[] newArray(int size) {
-            return new FoodDBModel[size];
-        }
-    };
 
     public Integer getMenuId() {
         return menuId;
@@ -215,55 +162,4 @@ public class FoodDBModel  implements Parcelable {
         this.orderstatus = orderstatus;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (menuId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(menuId);
-        }
-        dest.writeString(menuName);
-        if (price == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(price);
-        }
-        dest.writeString(description);
-        if (menuTypeId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(menuTypeId);
-        }
-        dest.writeString(menuImage);
-        dest.writeString(backgroundImage);
-        dest.writeString(ingredients);
-        if (menuStatus == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(menuStatus);
-        }
-        dest.writeString(created);
-        dest.writeString(modified);
-        if (rating == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(rating);
-        }
-        if (quantity == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(quantity);
-        }
-    }
 }

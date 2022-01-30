@@ -113,7 +113,7 @@ public class NetworkStateChecker extends BroadcastReceiver {
                 params.put("name", name);
 
                 //returing the response
-                return requestHandler.sendPostRequest(URLs.URL_SENDNAME, params);
+                return requestHandler.sendPostRequest(URLs.URL_SEND_ORDER, params);
             }
         }
 

@@ -3,6 +3,7 @@ package com.pkasemer.zodongofoods.Apis;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.HomeBannerModel;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
+import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 
@@ -49,23 +50,11 @@ public interface MovieService {
     );
 
 
-
-    @POST("menus/create.php")
-    Call<ResponseBody> postCartItems(
-            @Body List<FoodDBModel> foodDBModels
-    );
-
-    //on below line we are creating a method to post our data.
-
-    @FormUrlEncoded
-    @POST("index.php?action=item")
-    Call<FoodDBModel> postOrderItems(
-            @Field("items[]") List<FoodDBModel> listFooDBModel
+    @POST("orders/create_order.php")
+    Call<ResponseBody> postCartOrder(
+            @Body OrderRequest orderRequest
     );
 
 
-    //method 3
-    @POST("endpoint")
-    Call<Void> postPKArray(@Body Pk mypk);
 
 }
