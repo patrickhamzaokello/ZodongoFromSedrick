@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -152,7 +153,7 @@ public class LoginMaterial extends AppCompatActivity {
 
                     //if no error in response
                     if (!obj.getBoolean("error")) {
-//                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
 
                         //getting the user from the response
                         JSONObject userJson = obj.getJSONObject("user");

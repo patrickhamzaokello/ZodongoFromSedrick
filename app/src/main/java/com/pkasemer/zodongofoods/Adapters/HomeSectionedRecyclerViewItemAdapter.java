@@ -8,13 +8,17 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +34,7 @@ import com.pkasemer.zodongofoods.MyMenuDetail;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
+import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -42,6 +47,8 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         private ImageView itemimage;
         private ProgressBar mProgress;
 
+        Button home_st_carttn;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             itemimage = (ImageView) itemView.findViewById(R.id.product_imageview);
@@ -49,6 +56,8 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             itemprice = (TextView) itemView.findViewById(R.id.item_label);
             itemdesc = (TextView) itemView.findViewById(R.id.item_label_desc);
             mProgress = (ProgressBar) itemView.findViewById(R.id.home_product_image_progress);
+
+            home_st_carttn = (Button)itemView.findViewById(R.id.home_st_carttn);
 
 
         }
@@ -61,6 +70,15 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
+
+    SenseDBHelper db;
+    boolean food_db_itemchecker;
+
+    int minteger = 1;
+    int totalPrice;
+
+    public static final int MENU_SYNCED_WITH_SERVER = 1;
+    public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
 
     public HomeSectionedRecyclerViewItemAdapter(Context context, List<SectionedMenuItem> sectionedMenuItems) {
         this.context = context;
@@ -76,6 +94,26 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final SectionedMenuItem sectionedMenuItem = sectionedMenuItems.get(position);
+
+        db = new SenseDBHelper(context);
+
+        food_db_itemchecker = db.checktweetindb(String.valueOf(sectionedMenuItem.getMenuId()));
+
+        updatecartCount();
+
+        if (food_db_itemchecker) {
+
+
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+
+
+        } else {
+
+
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+
+
+        }
 
 
         holder.itemdesc.setText(sectionedMenuItem.getDescription());
@@ -103,6 +141,49 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 .centerCrop()
                 .transition(withCrossFade(factory))
                 .into(holder.itemimage);
+
+        holder.home_st_carttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                food_db_itemchecker = db.checktweetindb(String.valueOf(sectionedMenuItem.getMenuId()));
+
+
+                if (food_db_itemchecker) {
+                    db.addTweet(
+                            sectionedMenuItem.getMenuId(),
+                            sectionedMenuItem.getMenuName(),
+                            sectionedMenuItem.getPrice(),
+                            sectionedMenuItem.getDescription(),
+                            sectionedMenuItem.getMenuTypeId(),
+                            sectionedMenuItem.getMenuImage(),
+                            sectionedMenuItem.getBackgroundImage(),
+                            sectionedMenuItem.getIngredients(),
+                            sectionedMenuItem.getMenuStatus(),
+                            sectionedMenuItem.getCreated(),
+                            sectionedMenuItem.getModified(),
+                            sectionedMenuItem.getRating(),
+                            minteger,
+                            MENU_NOT_SYNCED_WITH_SERVER
+                    );
+
+
+
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+
+                    updatecartCount();
+
+
+                } else {
+                    db.deleteTweet(String.valueOf(sectionedMenuItem.getMenuId()));
+
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+
+
+                    updatecartCount();
+
+                }
+            }
+        });
 
 
         //show toast on click of show all button
@@ -135,6 +216,14 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 .with(context)
                 .load(BASE_URL_IMG + posterPath)
                 .centerCrop();
+    }
+
+    private void updatecartCount() {
+        db = new SenseDBHelper(context);
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     @Override

@@ -86,7 +86,7 @@
         android:padding="8dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/home_love"
+            android:id="@+id/home_addToCart"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
@@ -113,10 +113,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/home_addToCart"
+            android:id="@+id/home_love"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_toRightOf="@+id/home_love"
+            android:layout_toRightOf="@+id/home_addToCart"
             android:clipToPadding="false"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="100dp">

@@ -246,7 +246,8 @@ public class RegisterMaterial extends AppCompatActivity {
                         finish();
                         startActivity(new Intent(getApplicationContext(), RootActivity.class));
                     } else {
-                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        showUserExists();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -265,6 +266,14 @@ public class RegisterMaterial extends AppCompatActivity {
                 this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Oops...")
                 .setContentText("Something went wrong!")
+                .show();
+    }
+
+    private void showUserExists() {
+
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("User already Exists")
+                .setContentText("Try different Username and Email")
                 .show();
     }
 
