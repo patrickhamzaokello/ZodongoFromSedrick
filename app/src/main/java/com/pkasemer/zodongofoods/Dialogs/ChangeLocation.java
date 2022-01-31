@@ -57,6 +57,7 @@ public class ChangeLocation extends DialogFragment {
 
 
         builder.setView(view)
+                .setCancelable(false)
                 // Add action buttons
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override

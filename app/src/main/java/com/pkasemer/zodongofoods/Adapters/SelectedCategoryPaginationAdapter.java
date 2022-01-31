@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,7 @@ import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
+import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,6 +61,16 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
+
+    SenseDBHelper db;
+    boolean food_db_itemchecker;
+
+
+    int minteger = 1;
+    int totalPrice;
+
+    public static final int MENU_SYNCED_WITH_SERVER = 1;
+    public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
 
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
@@ -113,6 +126,12 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
         SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
 
+        db = new SenseDBHelper(context);
+
+        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+        updatecartCount();
+
         switch (getItemViewType(position)) {
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
@@ -137,6 +156,23 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                                 + "5"
                 );
                 movieVH.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+
+
+
+                if (food_db_itemchecker) {
+
+
+                    movieVH.selected_Category_plus.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+                } else {
+
+
+                    movieVH.selected_Category_plus.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+
+                }
+
 
                 Glide
                         .with(context)
@@ -171,6 +207,49 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                         i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
                         i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
                         context.startActivity(i);
+                    }
+                });
+
+                movieVH.selected_Category_plus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
+                            );
+
+
+
+                            movieVH.selected_Category_plus.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                            movieVH.selected_Category_plus.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+                            updatecartCount();
+
+                        }
                     }
                 });
 
@@ -225,6 +304,14 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
     }
 
+
+    private void updatecartCount() {
+        db = new SenseDBHelper(context);
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
 
 
@@ -338,6 +425,8 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
         private ImageView mPosterImg;
         private ProgressBar mProgress;
 
+        private Button selected_Category_plus;
+
         public MovieVH(View itemView) {
             super(itemView);
 
@@ -347,6 +436,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
             mYear = (TextView) itemView.findViewById(R.id.movie_year);
             mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
             mProgress = (ProgressBar) itemView.findViewById(R.id.movie_progress);
+            selected_Category_plus = (Button) itemView.findViewById(R.id.selected_Category_plus);
         }
     }
 

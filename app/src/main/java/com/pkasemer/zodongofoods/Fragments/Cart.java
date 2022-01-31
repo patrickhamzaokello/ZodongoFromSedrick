@@ -1,5 +1,7 @@
 package com.pkasemer.zodongofoods.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,11 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pkasemer.zodongofoods.Adapters.CartAdapter;
+import com.pkasemer.zodongofoods.Dialogs.OrderFailed;
 import com.pkasemer.zodongofoods.HelperClasses.CartItemHandlerListener;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.MyMenuDetail;
 import com.pkasemer.zodongofoods.PlaceOrder;
 import com.pkasemer.zodongofoods.R;
+import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
@@ -45,6 +49,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     LinearLayout procceed_checkout_layout;
 
     Button btnCheckout;
+
 
     public Cart() {
         // Required empty public constructor
@@ -215,17 +220,23 @@ public class Cart extends Fragment implements CartItemHandlerListener {
 
     private void emptycartwarning() {
         procceed_checkout_layout.setVisibility(View.GONE);
-        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Empty Cart")
-                .setContentText("Add Items to You Cart and Come Back")
-                .setConfirmText("Browse Menu")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+        progressBar.setVisibility(View.GONE);
+
+        AlertDialog.Builder android = new AlertDialog.Builder(getContext());
+        android.setTitle("Empty Cart");
+        android.setMessage("Add Items to your cart and check back here later")
+                .setCancelable(false)
+
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.dismissWithAnimation();
+                    public void onClick(DialogInterface dialog, int which) {
+                        //go to activity
+                        Intent intent = new Intent(getActivity(), RootActivity.class);
+                        startActivity(intent);
                     }
-                })
-                .show();
+                });
+
+        android.create().show();
     }
 
 

@@ -38,6 +38,7 @@ public class OrderFailed extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_order_failed, null);
 
         builder.setView(view)
+                .setCancelable(false)
         // Add action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

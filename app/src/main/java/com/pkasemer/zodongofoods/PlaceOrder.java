@@ -222,10 +222,16 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         String location_name = inputUserNewLocation.getText().toString();
         String phone = inputUserNewPhone.getText().toString();
 
-        Log.i("dialog", "Positive Method2: " + location_name + " - " + phone);
+        if(location_name != null && !location_name.isEmpty() && phone != null && !phone.isEmpty()){
+            Log.i("dialog", "Positive Method2: " + location_name + " - " + phone);
+            order_page_phoneno.setText(phone);
+            updatelocationView(location_name + "-" + phone);
 
-        order_page_phoneno.setText(phone);
-        updatelocationView(location_name + "-" + phone);
+        } else {
+            Toast.makeText(getApplicationContext(), "Location and Phone not Changed", Toast.LENGTH_SHORT);
+        }
+
+
     }
 
     @Override

@@ -333,9 +333,9 @@ public class Home extends Fragment  {
         progressBar.setVisibility(View.GONE);
 
         AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("Error: No Internet");
+        android.setTitle("No Internet Connection");
         android.setIcon(R.drawable.africanwoman);
-        android.setMessage("Sorry! We could not proceed due to No Internet Connection with Error Code: Zodongo 4M301. Check your Internet Connection and  Try again.")
+        android.setMessage("Check your Internet Connection and  Try again.!  Error Code: Zodongo 4M301.")
                 .setCancelable(false)
 
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
@@ -346,13 +346,7 @@ public class Home extends Fragment  {
                         startActivity(intent);
                     }
                 });
-        android.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //go to activity
-             android.create().dismiss();
-            }
-        });
+
         android.create().show();
 
     }
