@@ -43,7 +43,7 @@ import java.util.Locale;
 public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<HomeSectionedRecyclerViewItemAdapter.ItemViewHolder> {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView itemLabel, itemprice, itemdesc;
+        private TextView item_name,item_price, item_rating;
         private ImageView itemimage;
         private ProgressBar mProgress;
 
@@ -52,9 +52,9 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         public ItemViewHolder(View itemView) {
             super(itemView);
             itemimage = (ImageView) itemView.findViewById(R.id.product_imageview);
-            itemLabel = (TextView) itemView.findViewById(R.id.item_name);
-            itemprice = (TextView) itemView.findViewById(R.id.item_label);
-            itemdesc = (TextView) itemView.findViewById(R.id.item_label_desc);
+            item_name = (TextView) itemView.findViewById(R.id.item_name);
+            item_rating = (TextView) itemView.findViewById(R.id.item_rating);
+            item_price = (TextView) itemView.findViewById(R.id.item_price);
             mProgress = (ProgressBar) itemView.findViewById(R.id.home_product_image_progress);
 
             home_st_carttn = (Button)itemView.findViewById(R.id.home_st_carttn);
@@ -104,21 +104,21 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         if (food_db_itemchecker) {
 
 
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
 
         } else {
 
 
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
 
 
         }
 
 
-        holder.itemdesc.setText(sectionedMenuItem.getDescription());
-        holder.itemLabel.setText(sectionedMenuItem.getMenuName());
-        holder.itemprice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(sectionedMenuItem.getPrice()));
+        holder.item_name.setText(sectionedMenuItem.getMenuName());
+        holder.item_rating.setText( "Rating "+ sectionedMenuItem.getRating() + " | "+ "5");
+        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(sectionedMenuItem.getPrice()));
 
         Glide
                 .with(context)
@@ -168,7 +168,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
 
                     updatecartCount();
 
@@ -176,7 +176,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 } else {
                     db.deleteTweet(String.valueOf(sectionedMenuItem.getMenuId()));
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
 
                     updatecartCount();

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +38,7 @@ import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.GlideApp;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
+import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -60,6 +63,16 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
+
+    SenseDBHelper db;
+    boolean food_db_itemchecker;
+
+
+    int minteger = 1;
+    int totalPrice;
+
+    public static final int MENU_SYNCED_WITH_SERVER = 1;
+    public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
 
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
@@ -111,6 +124,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
 
+        db = new SenseDBHelper(context);
+
+        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+        updatecartCount();
+
+
+
+
         switch (getItemViewType(position)) {
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
@@ -119,7 +141,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
 
-                movieVH.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+                movieVH.mMovieRating.setText( "Rating "+ selectedCategoryMenuItemResult.getRating() + " | "+ "5");
 
                 Glide
                         .with(context)
@@ -144,6 +166,21 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .into(movieVH.mPosterImg);
 
 
+                if (food_db_itemchecker) {
+
+
+                    movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+                } else {
+
+
+                    movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+
+                }
+
+
                 //show toast on click of show all button
                 movieVH.mPosterImg.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -154,6 +191,49 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
                         i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
                         context.startActivity(i);
+                    }
+                });
+
+                movieVH.search_st_carttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+
+                        if (food_db_itemchecker) {
+                            db.addTweet(
+                                    selectedCategoryMenuItemResult.getMenuId(),
+                                    selectedCategoryMenuItemResult.getMenuName(),
+                                    selectedCategoryMenuItemResult.getPrice(),
+                                    selectedCategoryMenuItemResult.getDescription(),
+                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+                                    selectedCategoryMenuItemResult.getMenuImage(),
+                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+                                    selectedCategoryMenuItemResult.getIngredients(),
+                                    selectedCategoryMenuItemResult.getMenuStatus(),
+                                    selectedCategoryMenuItemResult.getCreated(),
+                                    selectedCategoryMenuItemResult.getModified(),
+                                    selectedCategoryMenuItemResult.getRating(),
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
+                            );
+
+
+
+                            movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+                            updatecartCount();
+
+
+                        } else {
+                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+
+                            movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+                            updatecartCount();
+
+                        }
                     }
                 });
 
@@ -205,6 +285,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mainActivity.switchContent(id, frag, "MenuDetails");
         }
 
+    }
+
+    private void updatecartCount() {
+        db = new SenseDBHelper(context);
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
 
@@ -318,19 +406,21 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private TextView mMovieTitle;
-        private TextView mMovieDesc;
+        private TextView mMovieRating;
         private TextView mMoviePrice;
         private ImageView mPosterImg;
         private ProgressBar mProgress;
+        private Button search_st_carttn;
 
         public MovieVH(View itemView) {
             super(itemView);
 
             mMovieTitle = (TextView) itemView.findViewById(R.id.item_name);
-            mMovieDesc = (TextView) itemView.findViewById(R.id.item_label_desc);
-            mMoviePrice = (TextView) itemView.findViewById(R.id.item_label);
+            mMovieRating = (TextView) itemView.findViewById(R.id.item_rating);
+            mMoviePrice = (TextView) itemView.findViewById(R.id.item_price);
             mPosterImg = (ImageView) itemView.findViewById(R.id.product_imageview);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.product_image_progress);
+            search_st_carttn = (Button) itemView.findViewById(R.id.search_st_carttn);
+            mProgress = (ProgressBar) itemView.findViewById(R.id.search_product_image_progress);
         }
     }
 
