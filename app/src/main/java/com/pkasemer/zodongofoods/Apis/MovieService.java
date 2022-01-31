@@ -4,6 +4,7 @@ import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.HomeBannerModel;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
+import com.pkasemer.zodongofoods.Models.OrderResponse;
 import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
 
@@ -51,7 +52,7 @@ public interface MovieService {
 
 
     @POST("orders/create_order.php")
-    Call<ResponseBody> postCartOrder(
+    Call<OrderResponse> postCartOrder(
             @Body OrderRequest orderRequest
     );
 

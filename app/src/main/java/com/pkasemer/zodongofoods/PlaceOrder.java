@@ -23,15 +23,21 @@ import com.pkasemer.zodongofoods.Apis.MovieService;
 import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
 import com.pkasemer.zodongofoods.Dialogs.ChangePaymentMethod;
 import com.pkasemer.zodongofoods.Dialogs.OrderConfirmationDialog;
+import com.pkasemer.zodongofoods.Dialogs.OrderFailed;
 import com.pkasemer.zodongofoods.HelperClasses.SharedPrefManager;
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
+import com.pkasemer.zodongofoods.Models.OrderResponse;
 import com.pkasemer.zodongofoods.Models.UserModel;
 import com.pkasemer.zodongofoods.localDatabase.SenseDBHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -124,37 +130,54 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                 placeorder_main_progress.setVisibility(View.VISIBLE);
 
-                postAllCartItems().enqueue(new Callback<ResponseBody>() {
+                postAllCartItems().enqueue(new Callback<OrderResponse>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
 
-                        Log.i("Ress", "onResponse: " + (response.code()));
+                        //set response body to match OrderResponse Model
+                        OrderResponse orderResponses = response.body();
                         placeorder_main_progress.setVisibility(View.GONE);
 
-                        if (response.code() == 200) {
-                            Log.i("Order Success", "Order Created: ");
-                            db.clearCart();
-                            updatecartCount();
-                            OrderTotalling();
 
-                            OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
-                            orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
+                        //if orderResponses is not null
+                        if (orderResponses != null) {
+
+                            //if no error- that is error = false
+                            if (!orderResponses.getError()) {
+                                Log.i("Order Success", orderResponses.getMessage() + orderResponses.getError() );
+                                db.clearCart();
+                                updatecartCount();
+                                OrderTotalling();
+                                OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
+                                orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
+
+                            } else {
+                                Log.i("Ress", "message: " + (orderResponses.getMessage()));
+                                Log.i("et", "error false: " + (orderResponses.getError()));
+
+                                ShowOrderFailed();
+
+                            }
 
 
                         } else {
-                            Log.i("Order Failed", "Order Failed Try Again: ");
-                        }
+                            Log.i("Order Response null", "Order is null Try Again: ");
 
-                        // Got data. Send it to adapter
+                            ShowOrderFailed();
+
+                            return;
+
+                        }
 
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<OrderResponse> call, Throwable t) {
                         placeorder_main_progress.setVisibility(View.GONE);
 
                         t.printStackTrace();
                         Log.i("Order Failed", "Order Failed Try Again: " + t);
+                        ShowOrderFailed();
                     }
                 });
             }
@@ -164,7 +187,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     }
 
 
-    private Call<ResponseBody> postAllCartItems() {
+    private Call<OrderResponse> postAllCartItems() {
         return movieService.postCartOrder(orderRequest);
     }
 
@@ -180,6 +203,11 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         Intent intent = new Intent(getApplicationContext().getResources().getString(R.string.cartcoutAction));
         intent.putExtra(getApplicationContext().getResources().getString(R.string.cartCount), mycartcount);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
+    private void ShowOrderFailed(){
+        OrderFailed orderFailed = new OrderFailed();
+        orderFailed.show(getSupportFragmentManager(), "Order Failed Dialog");
     }
 
     private void updatelocationView(String location) {
