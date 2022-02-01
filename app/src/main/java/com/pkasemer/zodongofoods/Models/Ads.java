@@ -2,7 +2,8 @@ package com.pkasemer.zodongofoods.Models;
 
 public class Ads {
 
-    private  String adsTitle, ads;
+    private final String adsTitle;
+    private final String ads;
 
     public Ads(String adsTitle, String ads) {
         this.adsTitle = adsTitle;

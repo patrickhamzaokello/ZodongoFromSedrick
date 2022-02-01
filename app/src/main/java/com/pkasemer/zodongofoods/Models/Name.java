@@ -1,8 +1,8 @@
 package com.pkasemer.zodongofoods.Models;
 
 public class Name {
-    private String name;
-    private int status;
+    private final String name;
+    private final int status;
 
     public Name(String name, int status) {
         this.name = name;

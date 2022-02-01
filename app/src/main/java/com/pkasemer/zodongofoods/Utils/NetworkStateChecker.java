@@ -54,9 +54,10 @@ public class NetworkStateChecker extends BroadcastReceiver {
                     do {
                         //calling the method to save the unsynced name to MySQL
                         saveName(
-                                cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID)),
-                                cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME))
-                        );
+                                Integer.parseInt(cursor.getString(0)),
+                                cursor.getString(1)
+
+                                );
                     } while (cursor.moveToNext());
                 }
             }

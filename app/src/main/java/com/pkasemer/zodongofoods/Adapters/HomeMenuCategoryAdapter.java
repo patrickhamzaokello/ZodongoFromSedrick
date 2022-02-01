@@ -53,7 +53,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     private List<HomeMenuCategoryModelResult> movieHomeMenuCategoryModelResults;
-    private Context context;
+    private final Context context;
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
@@ -297,30 +297,30 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     protected class MovieVH extends RecyclerView.ViewHolder {
 
-        private ImageView mPosterImg;
-        private ProgressBar mProgress;
+        private final ImageView mPosterImg;
+        private final ProgressBar mProgress;
 
         public MovieVH(View itemView) {
             super(itemView);
-            mPosterImg = (ImageView) itemView.findViewById(R.id.category_product_imageview);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.cat_product_image_progress);
+            mPosterImg = itemView.findViewById(R.id.category_product_imageview);
+            mProgress = itemView.findViewById(R.id.cat_product_image_progress);
         }
     }
 
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ProgressBar mProgressBar;
-        private ImageButton mRetryBtn;
-        private TextView mErrorTxt;
-        private LinearLayout mErrorLayout;
+        private final ProgressBar mProgressBar;
+        private final ImageButton mRetryBtn;
+        private final TextView mErrorTxt;
+        private final LinearLayout mErrorLayout;
 
         public LoadingVH(View itemView) {
             super(itemView);
 
-            mProgressBar = (ProgressBar) itemView.findViewById(R.id.loadmore_progress);
-            mRetryBtn = (ImageButton) itemView.findViewById(R.id.loadmore_retry);
-            mErrorTxt = (TextView) itemView.findViewById(R.id.loadmore_errortxt);
-            mErrorLayout = (LinearLayout) itemView.findViewById(R.id.loadmore_errorlayout);
+            mProgressBar = itemView.findViewById(R.id.loadmore_progress);
+            mRetryBtn = itemView.findViewById(R.id.loadmore_retry);
+            mErrorTxt = itemView.findViewById(R.id.loadmore_errortxt);
+            mErrorLayout = itemView.findViewById(R.id.loadmore_errorlayout);
 
             mRetryBtn.setOnClickListener(this);
             mErrorLayout.setOnClickListener(this);

@@ -15,10 +15,10 @@ import java.util.List;
 public class NameAdapter extends ArrayAdapter<Name> {
 
     //storing all the names in the list
-    private List<Name> names;
+    private final List<Name> names;
 
     //context object
-    private Context context;
+    private final Context context;
 
     //constructor
     public NameAdapter(Context context, int resource, List<Name> names) {
@@ -35,8 +35,8 @@ public class NameAdapter extends ArrayAdapter<Name> {
 
         //getting listview itmes
         View listViewItem = inflater.inflate(R.layout.names, null, true);
-        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
-        ImageView imageViewStatus = (ImageView) listViewItem.findViewById(R.id.imageViewStatus);
+        TextView textViewName = listViewItem.findViewById(R.id.textViewName);
+        ImageView imageViewStatus = listViewItem.findViewById(R.id.imageViewStatus);
 
         //getting the current name
         Name name = names.get(position);

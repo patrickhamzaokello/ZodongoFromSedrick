@@ -17,9 +17,9 @@ import com.pkasemer.zodongofoods.R;
 public class ChangeLocation extends DialogFragment {
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation,TextInputEditText inputUserNewPhone);
+        void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation, TextInputEditText inputUserNewPhone);
 
-        public void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogNegativeClick(DialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
@@ -52,8 +52,8 @@ public class ChangeLocation extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
 
         View view = inflater.inflate(R.layout.dialog_change_location, null);
-        inputUserNewLocation = (TextInputEditText) view.findViewById(R.id.inputUserNewLocation);
-        inputUserNewPhone = (TextInputEditText) view.findViewById(R.id.inputUserNewPhone);
+        inputUserNewLocation = view.findViewById(R.id.inputUserNewLocation);
+        inputUserNewPhone = view.findViewById(R.id.inputUserNewPhone);
 
 
         builder.setView(view)

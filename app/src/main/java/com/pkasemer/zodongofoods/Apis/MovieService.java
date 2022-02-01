@@ -58,4 +58,12 @@ public interface MovieService {
 
 
 
+    //fetch past orders
+    @GET("orders/read.php")
+    Call<SelectedCategoryMenuItem> getPastOrders(
+            @Query("customerID") int customerID
+    );
+
+
+
 }

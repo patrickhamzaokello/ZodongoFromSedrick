@@ -43,28 +43,30 @@ import java.util.Locale;
 public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<HomeSectionedRecyclerViewItemAdapter.ItemViewHolder> {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView item_name,item_price, item_rating;
-        private ImageView itemimage;
-        private ProgressBar mProgress;
+        private final TextView item_name;
+        private final TextView item_price;
+        private final TextView item_rating;
+        private final ImageView itemimage;
+        private final ProgressBar mProgress;
 
         Button home_st_carttn;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            itemimage = (ImageView) itemView.findViewById(R.id.product_imageview);
-            item_name = (TextView) itemView.findViewById(R.id.item_name);
-            item_rating = (TextView) itemView.findViewById(R.id.item_rating);
-            item_price = (TextView) itemView.findViewById(R.id.item_price);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.home_product_image_progress);
+            itemimage = itemView.findViewById(R.id.product_imageview);
+            item_name = itemView.findViewById(R.id.item_name);
+            item_rating = itemView.findViewById(R.id.item_rating);
+            item_price = itemView.findViewById(R.id.item_price);
+            mProgress = itemView.findViewById(R.id.home_product_image_progress);
 
-            home_st_carttn = (Button)itemView.findViewById(R.id.home_st_carttn);
+            home_st_carttn = itemView.findViewById(R.id.home_st_carttn);
 
 
         }
     }
 
-    private Context context;
-    private List<SectionedMenuItem> sectionedMenuItems;
+    private final Context context;
+    private final List<SectionedMenuItem> sectionedMenuItems;
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
 

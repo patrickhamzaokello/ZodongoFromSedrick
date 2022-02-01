@@ -1,6 +1,7 @@
 package com.pkasemer.zodongofoods;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -357,7 +358,7 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
      * @return
      */
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) MyMenuDetail.this.getSystemService(MyMenuDetail.this.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) MyMenuDetail.this.getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 

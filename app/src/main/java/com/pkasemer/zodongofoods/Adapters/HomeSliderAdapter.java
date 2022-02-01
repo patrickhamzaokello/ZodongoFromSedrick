@@ -29,7 +29,7 @@ public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.Slide
 
     // list for storing urls of images.
     private final List<Banner> banners;
-    private Context context;
+    private final Context context;
     private static final String BASE_URL_IMG = "";
 
     DrawableCrossFadeFactory factory =

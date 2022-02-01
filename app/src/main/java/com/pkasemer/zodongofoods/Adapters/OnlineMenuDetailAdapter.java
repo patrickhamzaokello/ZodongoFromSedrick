@@ -68,7 +68,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
-    private Context context;
+    private final Context context;
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
@@ -76,7 +76,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
-    private MenuDetailListener mCallback;
+    private final MenuDetailListener mCallback;
     private String errorMsg;
 
 
@@ -188,7 +188,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 } else {
                     heroVh.btnAddtoCart.setText("Remove from Cart");
-                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonRed));
+                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonGreen));
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
                     minteger = db.getMenuQtn(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
@@ -295,7 +295,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                             heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonRed));
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
                             heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
@@ -349,7 +349,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                             heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonRed));
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
                             heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
@@ -403,7 +403,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                             heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonRed));
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
                             heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
@@ -490,14 +490,12 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 if (food_db_itemchecker) {
 
                     //food not existing
-                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                    movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
                 } else {
 
                     //food existing
-                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                    movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
 
 
                 }
@@ -528,8 +526,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             );
 
 
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
 
                             updatecartCount();
 
@@ -538,8 +535,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
 
 
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
 
                             updatecartCount();
@@ -547,49 +543,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         }
                     }
                 });
-                movieVH.menu_st_likebtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
 
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            movieVH.menu_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-
-
-                            updatecartCount();
-
-                        }
-                    }
-                });
 
 
 
@@ -763,75 +717,86 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-        private ImageView menu_image;
-        private TextView menu_name, menu_shortinfo, menu_description, ratingnumber, menu_price, menu_qtn, itemQuanEt, menu_total_price;
-        private Button incrementQtn, decreaseQtn, btnAddtoCart,btnOrderNow, menu_detail_st_cartbtn, menu_detail_st_likebtn;
-        private ProgressBar mProgress;
+        private final ImageView menu_image;
+        private final TextView menu_name;
+        private final TextView menu_shortinfo;
+        private final TextView menu_description;
+        private final TextView ratingnumber;
+        private final TextView menu_price;
+        private final TextView menu_qtn;
+        private final TextView itemQuanEt;
+        private final TextView menu_total_price;
+        private final Button incrementQtn;
+        private final Button decreaseQtn;
+        private final Button btnAddtoCart;
+        private final Button btnOrderNow;
+        private final Button menu_detail_st_cartbtn;
+        private final Button menu_detail_st_likebtn;
+        private final ProgressBar mProgress;
 
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
-            menu_image = (ImageView) itemView.findViewById(R.id.menu_image);
-            menu_name = (TextView) itemView.findViewById(R.id.menu_name);
-            menu_shortinfo = (TextView) itemView.findViewById(R.id.menu_shortinfo);
-            menu_description = (TextView) itemView.findViewById(R.id.menu_description);
-            ratingnumber = (TextView) itemView.findViewById(R.id.ratingnumber);
-            menu_price = (TextView) itemView.findViewById(R.id.menu_price);
-            menu_qtn = (TextView) itemView.findViewById(R.id.menu_qtn);
-            itemQuanEt = (TextView) itemView.findViewById(R.id.itemQuanEt);
-            menu_total_price = (TextView) itemView.findViewById(R.id.menu_total_price);
+            menu_image = itemView.findViewById(R.id.menu_image);
+            menu_name = itemView.findViewById(R.id.menu_name);
+            menu_shortinfo = itemView.findViewById(R.id.menu_shortinfo);
+            menu_description = itemView.findViewById(R.id.menu_description);
+            ratingnumber = itemView.findViewById(R.id.ratingnumber);
+            menu_price = itemView.findViewById(R.id.menu_price);
+            menu_qtn = itemView.findViewById(R.id.menu_qtn);
+            itemQuanEt = itemView.findViewById(R.id.itemQuanEt);
+            menu_total_price = itemView.findViewById(R.id.menu_total_price);
             incrementQtn = itemView.findViewById(R.id.addBtn);
             decreaseQtn = itemView.findViewById(R.id.removeBtn);
-            btnAddtoCart = (MaterialButton) itemView.findViewById(R.id.btnAddtoCart);
-            btnOrderNow =  (MaterialButton) itemView.findViewById(R.id.btnOrderNow);
+            btnAddtoCart = itemView.findViewById(R.id.btnAddtoCart);
+            btnOrderNow = itemView.findViewById(R.id.btnOrderNow);
 
             menu_detail_st_cartbtn = itemView.findViewById(R.id.menu_detail_st_cartbtn);
             menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
 
-            mProgress = (ProgressBar) itemView.findViewById(R.id.product_detail_image_progress);
+            mProgress = itemView.findViewById(R.id.product_detail_image_progress);
         }
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView mMovieTitle;
-        private TextView mMovieDesc;
-        private TextView mMoviePrice;
-        private TextView mYear; // displays "year | language"
-        private ImageView mPosterImg;
-        private ProgressBar mProgress;
-        private Button menu_st_likebtn, menu_st_carttn;
+        private final TextView mMovieTitle;
+        private final TextView mMovieDesc;
+        private final TextView mMoviePrice;
+        private final TextView mYear; // displays "year | language"
+        private final ImageView mPosterImg;
+        private final ProgressBar mProgress;
+        private final Button menu_st_carttn;
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            mMovieTitle = (TextView) itemView.findViewById(R.id.movie_title);
-            mMovieDesc = (TextView) itemView.findViewById(R.id.movie_desc);
-            mMoviePrice = (TextView) itemView.findViewById(R.id.movie_price);
-            mYear = (TextView) itemView.findViewById(R.id.movie_year);
-            mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.movie_progress);
+            mMovieTitle = itemView.findViewById(R.id.movie_title);
+            mMovieDesc = itemView.findViewById(R.id.movie_desc);
+            mMoviePrice = itemView.findViewById(R.id.movie_price);
+            mYear = itemView.findViewById(R.id.movie_year);
+            mPosterImg = itemView.findViewById(R.id.movie_poster);
+            mProgress = itemView.findViewById(R.id.movie_progress);
 
-            menu_st_carttn = (Button) itemView.findViewById(R.id.menu_st_carttn);
-            menu_st_likebtn = (Button)  itemView.findViewById(R.id.menu_st_likebtn);
+            menu_st_carttn = itemView.findViewById(R.id.menu_st_carttn);
 
         }
     }
 
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ProgressBar mProgressBar;
-        private ImageButton mRetryBtn;
-        private TextView mErrorTxt;
-        private LinearLayout mErrorLayout;
+        private final ProgressBar mProgressBar;
+        private final ImageButton mRetryBtn;
+        private final TextView mErrorTxt;
+        private final LinearLayout mErrorLayout;
 
         public LoadingVH(View itemView) {
             super(itemView);
 
-            mProgressBar = (ProgressBar) itemView.findViewById(R.id.loadmore_progress);
-            mRetryBtn = (ImageButton) itemView.findViewById(R.id.loadmore_retry);
-            mErrorTxt = (TextView) itemView.findViewById(R.id.loadmore_errortxt);
-            mErrorLayout = (LinearLayout) itemView.findViewById(R.id.loadmore_errorlayout);
+            mProgressBar = itemView.findViewById(R.id.loadmore_progress);
+            mRetryBtn = itemView.findViewById(R.id.loadmore_retry);
+            mErrorTxt = itemView.findViewById(R.id.loadmore_errortxt);
+            mErrorLayout = itemView.findViewById(R.id.loadmore_errorlayout);
 
             mRetryBtn.setOnClickListener(this);
             mErrorLayout.setOnClickListener(this);

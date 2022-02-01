@@ -83,9 +83,9 @@ public class Demo extends  AppCompatActivity implements View.OnClickListener {
         db = new DatabaseHelper(this);
         names = new ArrayList<>();
 
-        buttonSave = (Button) findViewById(R.id.buttonSave);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        listViewNames = (ListView) findViewById(R.id.listViewNames);
+        buttonSave = findViewById(R.id.buttonSave);
+        editTextName = findViewById(R.id.editTextName);
+        listViewNames = findViewById(R.id.listViewNames);
 
         //adding click listener to button
         buttonSave.setOnClickListener(this);
@@ -120,8 +120,8 @@ public class Demo extends  AppCompatActivity implements View.OnClickListener {
         if (cursor.moveToFirst()) {
             do {
                 Name name = new Name(
-                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)),
-                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_STATUS))
+                        cursor.getString(1),
+                        Integer.parseInt(cursor.getString(2))
                 );
                 names.add(name);
             } while (cursor.moveToNext());

@@ -67,8 +67,8 @@ public class LoginMaterial extends AppCompatActivity {
         username_layout = findViewById(R.id.login_username);
         password_layout = findViewById(R.id.login_password);
 
-        inputTextUsername = (TextInputEditText) findViewById(R.id.inputTextUsername);
-        inputTextPassword = (TextInputEditText) findViewById(R.id.inputTextPassword);
+        inputTextUsername = findViewById(R.id.inputTextUsername);
+        inputTextPassword = findViewById(R.id.inputTextPassword);
 
 
         //if user presses on login
@@ -132,7 +132,7 @@ public class LoginMaterial extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                progressBar = findViewById(R.id.progressBar);
                 progressBar.setVisibility(View.VISIBLE);
             }
 

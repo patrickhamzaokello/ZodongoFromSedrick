@@ -54,9 +54,9 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     SenseDBHelper db;
 
 
-    private Context context;
+    private final Context context;
 
-    private boolean isLoadingAdded = false;
+    private final boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
 
 
@@ -66,7 +66,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private String errorMsg;
 
-    private CartItemHandlerListener mCartListener;
+    private final CartItemHandlerListener mCartListener;
 
 
     public CartAdapter(Context context, List<FoodDBModel>tweetList, CartItemHandlerListener mCartListener) {
@@ -277,10 +277,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected class CartDesignVH extends RecyclerView.ViewHolder {
         private TextView id_strView;
-        private TextView cart_product_name,cart_product_price, itemQuanEt,fooditemtotal,cart_item_Rating;
-        private ImageView cart_product_image;
-        private Button btnCartItemRemove,cart_addBtn,cart_removeBtn;
-        private ProgressBar mProgress;
+        private final TextView cart_product_name;
+        private final TextView cart_product_price;
+        private final TextView itemQuanEt;
+        private final TextView fooditemtotal;
+        private final TextView cart_item_Rating;
+        private final ImageView cart_product_image;
+        private final Button btnCartItemRemove;
+        private final Button cart_addBtn;
+        private final Button cart_removeBtn;
+        private final ProgressBar mProgress;
 
         public CartDesignVH(View itemView) {
             super(itemView);
@@ -289,7 +295,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             cart_product_image = itemView.findViewById(R.id.cart_product_image);
             itemQuanEt = itemView.findViewById(R.id.itemQuanEt);
             btnCartItemRemove = itemView.findViewById(R.id.btnCartItemRemove);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.cart_progress);
+            mProgress = itemView.findViewById(R.id.cart_progress);
             fooditemtotal = itemView.findViewById(R.id.fooditemtotal);
             cart_item_Rating = itemView.findViewById(R.id.cart_item_Rating);
             cart_addBtn = itemView.findViewById(R.id.cart_addBtn);
@@ -299,18 +305,18 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ProgressBar mProgressBar;
-        private ImageButton mRetryBtn;
-        private TextView mErrorTxt;
-        private LinearLayout mErrorLayout;
+        private final ProgressBar mProgressBar;
+        private final ImageButton mRetryBtn;
+        private final TextView mErrorTxt;
+        private final LinearLayout mErrorLayout;
 
         public LoadingVH(View itemView) {
             super(itemView);
 
-            mProgressBar = (ProgressBar) itemView.findViewById(R.id.loadmore_progress);
-            mRetryBtn = (ImageButton) itemView.findViewById(R.id.loadmore_retry);
-            mErrorTxt = (TextView) itemView.findViewById(R.id.loadmore_errortxt);
-            mErrorLayout = (LinearLayout) itemView.findViewById(R.id.loadmore_errorlayout);
+            mProgressBar = itemView.findViewById(R.id.loadmore_progress);
+            mRetryBtn = itemView.findViewById(R.id.loadmore_retry);
+            mErrorTxt = itemView.findViewById(R.id.loadmore_errortxt);
+            mErrorLayout = itemView.findViewById(R.id.loadmore_errorlayout);
 
             mRetryBtn.setOnClickListener(this);
             mErrorLayout.setOnClickListener(this);

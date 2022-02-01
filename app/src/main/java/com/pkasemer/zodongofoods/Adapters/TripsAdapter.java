@@ -20,7 +20,7 @@ import java.util.List;
 public class TripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
-    private List<Item> items;
+    private final List<Item> items;
 
     public TripsAdapter(List<Item> items){
         this.items = items;
@@ -86,8 +86,9 @@ public class TripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     static  class SliderViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView imageTrip;
-        private TextView textTripTitle,textTrip;
+        private final ImageView imageTrip;
+        private final TextView textTripTitle;
+        private final TextView textTrip;
 
         public SliderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,8 +108,9 @@ public class TripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     static  class TripViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView imageTrip;
-        private TextView textTripTitle,textTrip;
+        private final ImageView imageTrip;
+        private final TextView textTripTitle;
+        private final TextView textTrip;
 
         public TripViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,7 +127,8 @@ public class TripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     static class AdsViewHolder extends RecyclerView.ViewHolder{
-        private TextView textAdsTitle, textAds;
+        private final TextView textAdsTitle;
+        private final TextView textAds;
 
 
         public AdsViewHolder(@NonNull View itemView) {
@@ -143,7 +146,8 @@ public class TripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     static class NewsViewHolder extends RecyclerView.ViewHolder{
-        private TextView textnewsTitle, textNews;
+        private final TextView textnewsTitle;
+        private final TextView textNews;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);

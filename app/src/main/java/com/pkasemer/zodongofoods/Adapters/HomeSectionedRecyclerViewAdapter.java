@@ -22,18 +22,19 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
 
 
     class SectionViewHolder extends RecyclerView.ViewHolder {
-        private TextView sectionLabel, showAllButton;
-        private RecyclerView itemRecyclerView;
+        private final TextView sectionLabel;
+        private final TextView showAllButton;
+        private final RecyclerView itemRecyclerView;
 
         public SectionViewHolder(View itemView) {
             super(itemView);
-            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
-            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
+            sectionLabel = itemView.findViewById(R.id.section_label);
+            showAllButton = itemView.findViewById(R.id.section_show_all_button);
+            itemRecyclerView = itemView.findViewById(R.id.item_recycler_view);
         }
     }
 
-    private Context context;
+    private final Context context;
     List<SectionedCategoryResult> sectionedCategoryResults;
 
     public HomeSectionedRecyclerViewAdapter(Context context, List<SectionedCategoryResult> sectionedCategoryResults) {

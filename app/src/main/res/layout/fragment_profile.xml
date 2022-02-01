@@ -86,6 +86,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
+                android:id="@+id/manageOrders"
                 android:layout_height="125dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
@@ -104,13 +105,12 @@
                         android:id="@+id/wallet_labels"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/cartLogo"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
 
                         android:fontFamily="@font/montserrat_bold"
                         android:includeFontPadding="false"
-                        android:text="3"
+                        android:text="Orders"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
@@ -121,13 +121,14 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/wallet_labels"
                         android:layout_centerVertical="true"
-
                         android:layout_centerHorizontal="true"
+                        android:layout_marginHorizontal="20dp"
+                        android:gravity="center"
                         android:fontFamily="@font/montserrat"
                         android:includeFontPadding="false"
-                        android:text="Total Cart Items"
+                        android:text="Manage all Your Orders Here"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </RelativeLayout>
 

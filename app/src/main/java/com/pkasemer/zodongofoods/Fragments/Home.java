@@ -296,7 +296,7 @@ public class Home extends Fragment  {
 
 
     private void setUpHomeSectionRecyclerView(View view) {
-        sectionedmenurecyclerView = (RecyclerView) view.findViewById(R.id.menu_sectioned_recyclerView);
+        sectionedmenurecyclerView = view.findViewById(R.id.menu_sectioned_recyclerView);
         sectionedmenurecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
             @Override

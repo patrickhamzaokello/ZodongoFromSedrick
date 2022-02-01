@@ -1,6 +1,7 @@
 package com.pkasemer.zodongofoods;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -337,7 +338,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
      * @return
      */
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) MySelectedCategory.this.getSystemService(MySelectedCategory.this.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) MySelectedCategory.this.getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 

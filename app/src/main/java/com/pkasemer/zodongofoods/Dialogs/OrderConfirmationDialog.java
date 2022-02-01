@@ -16,7 +16,7 @@ import com.pkasemer.zodongofoods.R;
 public class OrderConfirmationDialog extends DialogFragment {
 
     public interface OrderConfirmLister {
-        public void onOrderDialogPositiveClick(DialogFragment dialog);
+        void onOrderDialogPositiveClick(DialogFragment dialog);
 
     }
 

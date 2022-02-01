@@ -63,7 +63,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
-    private int selectCategoryId = 3;
+    private final int selectCategoryId = 3;
 
     List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults;
 
@@ -147,7 +147,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
 
         // Locate the EditText in listview_main.xml
-        SearchView searchView = (SearchView) view.findViewById(R.id.search_bar);
+        SearchView searchView = view.findViewById(R.id.search_bar);
 
         searchView.setActivated(true);
         searchView.setQueryHint("Type your keyword here");

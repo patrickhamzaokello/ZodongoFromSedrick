@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    tools:context=".Fragments.MenuDetail">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,7 +127,7 @@
                         android:layout_centerInParent="true"
                         android:background="@drawable/custom_cart_btn"
                         android:backgroundTint="@color/purple_500"
-                        android:theme="@style/Redbtn" />
+                        android:theme="@style/BlackBtn" />
 
                 </RelativeLayout>
 
@@ -152,7 +151,7 @@
 
                     <Button
                         android:id="@+id/menu_detail_st_likebtn"
-                        android:theme="@style/Redbtn"
+                        android:theme="@style/BlackBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
@@ -418,7 +417,6 @@
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="Add to Cart"
-            app:icon="@drawable/custom_cart_btn"
             app:iconSize="18dp"
             app:iconGravity="textStart"
             app:iconTint="@color/white"

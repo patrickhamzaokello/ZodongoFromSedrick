@@ -1,8 +1,9 @@
 package com.pkasemer.zodongofoods.Models;
 
 public class Trip {
-    private int tripImage;
-    private String tripTitle, trip;
+    private final int tripImage;
+    private final String tripTitle;
+    private final String trip;
 
     public Trip(int tripImage, String tripTitle, String trip) {
         this.tripImage = tripImage;

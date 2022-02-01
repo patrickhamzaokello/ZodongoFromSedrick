@@ -88,7 +88,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         order_page_phoneno = findViewById(R.id.order_page_phoneno);
         order_page_username = findViewById(R.id.order_page_username);
 
-        placeorder_main_progress = (ProgressBar) findViewById(R.id.placeorder_main_progress);
+        placeorder_main_progress = findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
 
         OrderTotalling();

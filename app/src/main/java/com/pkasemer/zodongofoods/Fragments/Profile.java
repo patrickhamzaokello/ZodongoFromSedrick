@@ -2,16 +2,21 @@ package com.pkasemer.zodongofoods.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.card.MaterialCardView;
 import com.pkasemer.zodongofoods.HelperClasses.SharedPrefManager;
 import com.pkasemer.zodongofoods.LoginMaterial;
+import com.pkasemer.zodongofoods.ManageOrders;
 import com.pkasemer.zodongofoods.Models.UserModel;
+import com.pkasemer.zodongofoods.PlaceOrder;
 import com.pkasemer.zodongofoods.R;
 
 
@@ -19,6 +24,9 @@ public class Profile extends Fragment {
 
 
     TextView textViewUsername, textViewEmail,address_text,full_name_text,card_email_text,card_address_text,card_phone_text;
+
+
+    MaterialCardView manageOrders;
 
     public Profile() {
         // Required empty public constructor
@@ -47,15 +55,16 @@ public class Profile extends Fragment {
         }
 
 
-        textViewUsername = (TextView) view.findViewById(R.id.full_name);
-        textViewEmail = (TextView) view.findViewById(R.id.email_text);
-        address_text = (TextView) view.findViewById(R.id.address_text);
+        textViewUsername = view.findViewById(R.id.full_name);
+        textViewEmail = view.findViewById(R.id.email_text);
+        address_text = view.findViewById(R.id.address_text);
 
 
-        full_name_text = (TextView) view.findViewById(R.id.full_name_text);
-        card_email_text = (TextView) view.findViewById(R.id.card_email_text);
-        card_address_text = (TextView) view.findViewById(R.id.card_address_text);
-        card_phone_text = (TextView) view.findViewById(R.id.card_phone_text);
+        full_name_text = view.findViewById(R.id.full_name_text);
+        card_email_text = view.findViewById(R.id.card_email_text);
+        card_address_text = view.findViewById(R.id.card_address_text);
+        card_phone_text = view.findViewById(R.id.card_phone_text);
+        manageOrders = view.findViewById(R.id.manageOrders);
 
         //getting the current user
         UserModel userModel = SharedPrefManager.getInstance(getContext()).getUser();
@@ -81,6 +90,17 @@ public class Profile extends Fragment {
 
             }
         });
+
+        manageOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i("show past order ", "orders" );
+                Intent i = new Intent(getContext(), ManageOrders.class);
+                startActivity(i);
+            }
+        });
+
 
 
 

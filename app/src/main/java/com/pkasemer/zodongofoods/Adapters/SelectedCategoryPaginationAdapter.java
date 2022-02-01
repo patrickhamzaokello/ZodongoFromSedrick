@@ -57,7 +57,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
 
     private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
-    private Context context;
+    private final Context context;
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
@@ -75,7 +75,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
-    private PaginationAdapterCallback mCallback;
+    private final PaginationAdapterCallback mCallback;
     private String errorMsg;
 
     public SelectedCategoryPaginationAdapter(Context context, PaginationAdapterCallback callback) {
@@ -402,58 +402,58 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-        private TextView mMovieTitle;
-        private TextView mMovieDesc;
-        private TextView mYear;
-        private ImageView mPosterImg;
+        private final TextView mMovieTitle;
+        private final TextView mMovieDesc;
+        private final TextView mYear;
+        private final ImageView mPosterImg;
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
-            mMovieTitle = (TextView) itemView.findViewById(R.id.movie_title);
-            mMovieDesc = (TextView) itemView.findViewById(R.id.movie_desc);
-            mYear = (TextView) itemView.findViewById(R.id.movie_year);
-            mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
+            mMovieTitle = itemView.findViewById(R.id.movie_title);
+            mMovieDesc = itemView.findViewById(R.id.movie_desc);
+            mYear = itemView.findViewById(R.id.movie_year);
+            mPosterImg = itemView.findViewById(R.id.movie_poster);
         }
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView mMovieTitle;
-        private TextView mMovieDesc;
-        private TextView mMoviePrice;
-        private TextView mYear; // displays "year | language"
-        private ImageView mPosterImg;
-        private ProgressBar mProgress;
+        private final TextView mMovieTitle;
+        private final TextView mMovieDesc;
+        private final TextView mMoviePrice;
+        private final TextView mYear; // displays "year | language"
+        private final ImageView mPosterImg;
+        private final ProgressBar mProgress;
 
-        private Button selected_Category_plus;
+        private final Button selected_Category_plus;
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            mMovieTitle = (TextView) itemView.findViewById(R.id.movie_title);
-            mMovieDesc = (TextView) itemView.findViewById(R.id.movie_desc);
-            mMoviePrice = (TextView) itemView.findViewById(R.id.movie_price);
-            mYear = (TextView) itemView.findViewById(R.id.movie_year);
-            mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
-            mProgress = (ProgressBar) itemView.findViewById(R.id.movie_progress);
-            selected_Category_plus = (Button) itemView.findViewById(R.id.selected_Category_plus);
+            mMovieTitle = itemView.findViewById(R.id.movie_title);
+            mMovieDesc = itemView.findViewById(R.id.movie_desc);
+            mMoviePrice = itemView.findViewById(R.id.movie_price);
+            mYear = itemView.findViewById(R.id.movie_year);
+            mPosterImg = itemView.findViewById(R.id.movie_poster);
+            mProgress = itemView.findViewById(R.id.movie_progress);
+            selected_Category_plus = itemView.findViewById(R.id.selected_Category_plus);
         }
     }
 
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ProgressBar mProgressBar;
-        private ImageButton mRetryBtn;
-        private TextView mErrorTxt;
-        private LinearLayout mErrorLayout;
+        private final ProgressBar mProgressBar;
+        private final ImageButton mRetryBtn;
+        private final TextView mErrorTxt;
+        private final LinearLayout mErrorLayout;
 
         public LoadingVH(View itemView) {
             super(itemView);
 
-            mProgressBar = (ProgressBar) itemView.findViewById(R.id.loadmore_progress);
-            mRetryBtn = (ImageButton) itemView.findViewById(R.id.loadmore_retry);
-            mErrorTxt = (TextView) itemView.findViewById(R.id.loadmore_errortxt);
-            mErrorLayout = (LinearLayout) itemView.findViewById(R.id.loadmore_errorlayout);
+            mProgressBar = itemView.findViewById(R.id.loadmore_progress);
+            mRetryBtn = itemView.findViewById(R.id.loadmore_retry);
+            mErrorTxt = itemView.findViewById(R.id.loadmore_errortxt);
+            mErrorLayout = itemView.findViewById(R.id.loadmore_errorlayout);
 
             mRetryBtn.setOnClickListener(this);
             mErrorLayout.setOnClickListener(this);
