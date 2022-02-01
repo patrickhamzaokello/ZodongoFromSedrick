@@ -85,7 +85,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         db = new SenseDBHelper(view.getContext());
         cartitemlist = db.listTweetsBD();
 

@@ -54,7 +54,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
         holder.sectionLabel.setText(sectionedCategoryResult.getName());
 
         //recycler view for items
-        holder.itemRecyclerView.setHasFixedSize(true);
+//        holder.itemRecyclerView.setHasFixedSize(true);
         holder.itemRecyclerView.setNestedScrollingEnabled(false);
 
         /* set layout manager on basis of recyclerview enum type */
