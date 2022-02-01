@@ -94,9 +94,11 @@
                 app:cardBackgroundColor="@color/profilecards"
                 app:cardCornerRadius="5dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
                     android:padding="5dp">
 
 
@@ -105,13 +107,11 @@
                         android:id="@+id/wallet_labels"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-
+                        android:layout_gravity="center"
                         android:fontFamily="@font/montserrat_bold"
                         android:includeFontPadding="false"
                         android:text="Orders"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="20sp" />
 
 
@@ -120,17 +120,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/wallet_labels"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginHorizontal="20dp"
-                        android:gravity="center"
                         android:fontFamily="@font/montserrat"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="Manage all Your Orders Here"
-                        android:textColor="@color/black"
+                        android:text="Monitor and Track all Your Orders Here"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
 
             </com.google.android.material.card.MaterialCardView>
@@ -145,9 +144,11 @@
 
                 >
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
                     android:padding="5dp">
 
 
@@ -156,28 +157,29 @@
                         android:id="@+id/wallet_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/montserrat_bold"
                         android:includeFontPadding="false"
-                        android:text="1400"
-                        android:textColor="@color/black"
+                        android:text="Wallet"
+                        android:textColor="@color/white"
                         android:textSize="20sp" />
 
 
                     <TextView
-                        android:id="@+id/wallet_desc"
+                        android:id="@+id/wallet_credit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/wallet_label"
-                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/wallet_labels"
                         android:fontFamily="@font/montserrat"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="Total Wallet Credit"
-                        android:textColor="@color/black"
+                        android:text="Manage all your accumulated Points"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
+                </LinearLayout>
 
 
             </com.google.android.material.card.MaterialCardView>
@@ -213,7 +215,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:includeFontPadding="false"
                         android:maxLines="2"
-                        android:text="Earn Credits by Ordering Food from us"
+                        android:text="Earn Points by Ordering Food from us"
                         android:textColor="#fff"
                         android:textSize="22sp"
                         android:transitionName="logo_text"
@@ -228,7 +230,7 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat"
                         android:includeFontPadding="false"
-                        android:text="Get free crdits anytime you make an order with us. you can use your credit to pay for your next order at any zodongo Restuarant."
+                        android:text="Get free Points anytime you make an order with us. you can use your points to pay for your next order at any zodongo Restuarant."
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:transitionName="logo_desc" />

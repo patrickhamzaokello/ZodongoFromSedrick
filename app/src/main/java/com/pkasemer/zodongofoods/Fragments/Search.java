@@ -310,6 +310,11 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         loadNextPage();
     }
 
+    @Override
+    public void requestfailed() {
+
+    }
+
 
     /**
      * @param throwable required for {@link #fetchErrorMessage(Throwable)}

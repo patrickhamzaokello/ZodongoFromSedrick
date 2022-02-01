@@ -7,6 +7,7 @@ import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.Models.OrderResponse;
 import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
 import com.pkasemer.zodongofoods.Models.SelectedCategoryMenuItem;
+import com.pkasemer.zodongofoods.Models.UserOrders;
 
 import java.util.List;
 
@@ -59,9 +60,10 @@ public interface MovieService {
 
 
     //fetch past orders
-    @GET("orders/read.php")
-    Call<SelectedCategoryMenuItem> getPastOrders(
-            @Query("customerID") int customerID
+    @GET("orders/userOrders.php")
+    Call<UserOrders> getUserOrders(
+            @Query("customerId") int customerID,
+            @Query("page") int pageIndex
     );
 
 

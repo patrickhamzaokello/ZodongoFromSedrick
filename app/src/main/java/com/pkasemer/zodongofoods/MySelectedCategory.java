@@ -259,6 +259,11 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         loadNextPage();
     }
 
+    @Override
+    public void requestfailed() {
+
+    }
+
 
     /**
      * @param throwable required for {@link #fetchErrorMessage(Throwable)}

@@ -8,4 +8,5 @@ package com.pkasemer.zodongofoods.Utils;
 public interface PaginationAdapterCallback {
 
     void retryPageLoad();
+    void requestfailed();
 }
