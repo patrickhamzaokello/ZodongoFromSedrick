@@ -262,7 +262,6 @@ public class ManageOrders extends AppCompatActivity implements PaginationAdapter
 
     @Override
     public void requestfailed() {
-        Toast.makeText(getApplicationContext(), "from me", Toast.LENGTH_SHORT).show();
         OrderNotFound orderNotFound = new OrderNotFound();
         orderNotFound.show(getSupportFragmentManager(), "Order Not Found");
     }
