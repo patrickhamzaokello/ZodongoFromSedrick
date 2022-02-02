@@ -98,30 +98,19 @@
             android:maxLines="2"
             tools:text="UGX 34,600" />
 
-        <TextView
-            android:id="@+id/order_addresslable"
-            android:layout_below="@+id/order_total_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/light_grey"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:fontFamily="@font/montserrat"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Delivery Address"
-            />
+
 
 
         <TextView
             android:id="@+id/order_address"
-            android:layout_below="@+id/order_addresslable"
+            android:layout_below="@+id/order_total_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/profilecards"
             android:fontFamily="@font/montserrat"
             android:ellipsize="end"
             android:maxLines="2"
+            android:layout_marginTop="10dp"
             tools:text="Address: Lira, Adyel 0787250196"
             />
 

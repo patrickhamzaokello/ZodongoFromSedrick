@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.material:material:1.4.0@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/8e3df74b24eb6c89f108001d95ec2865/transformed/material-1.4.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/13908aaa81502cf65505ebebf6ac41b7/transformed/material-1.4.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/8e3df74b24eb6c89f108001d95ec2865/transformed/material-1.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/8e3df74b24eb6c89f108001d95ec2865/transformed/material-1.4.0/res" />
-      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/8e3df74b24eb6c89f108001d95ec2865/transformed/material-1.4.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/13908aaa81502cf65505ebebf6ac41b7/transformed/material-1.4.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/13908aaa81502cf65505ebebf6ac41b7/transformed/material-1.4.0/res" />
+      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/13908aaa81502cf65505ebebf6ac41b7/transformed/material-1.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

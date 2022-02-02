@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.work:work-gcm:2.7.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5ab530c6877fff2ccd0da240d52e26e4/transformed/jetified-work-gcm-2.7.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5ab530c6877fff2ccd0da240d52e26e4/transformed/jetified-work-gcm-2.7.1/res" />
-      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5ab530c6877fff2ccd0da240d52e26e4/transformed/jetified-work-gcm-2.7.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/res" />
+      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

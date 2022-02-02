@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "334223276212",
+    "project_id": "pushnotificationproject-e384f",
+    "storage_bucket": "pushnotificationproject-e384f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334223276212:android:f46007984e4df1b2137fe1",
+        "android_client_info": {
+          "package_name": "com.pkasemer.zodongofoods"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334223276212-7polr7ltbmnv90q6thf45ehimestp9k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqlBfNRrdxs4VxxSc1PX8K-JKaWd1af14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334223276212-7polr7ltbmnv90q6thf45ehimestp9k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

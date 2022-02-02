@@ -127,7 +127,7 @@ public class UserOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     movieVH.order_date.setText(formatYearLabel(userOrdersResult));
                     movieVH.order_total_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(userOrdersResult.getTotalAmount()));
                     movieVH.order_tracking_no.setText("ZF34099112" + userOrdersResult.getOrderId());
-                    movieVH.order_address.setText(userOrdersResult.getOrderAddress());
+                    movieVH.order_address.setText("Address:" + userOrdersResult.getOrderAddress());
 
                     // check order conditioin
                     /*

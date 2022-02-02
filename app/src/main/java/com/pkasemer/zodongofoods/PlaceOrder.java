@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     OrderRequest orderRequest = new OrderRequest();
     TextView btn_change_location, moneyChangeButton, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
 
+    RelativeLayout placeorde_relative_layout;
     Button btnCheckout;
 
     @Override
@@ -87,6 +89,8 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         order_page_fullname = findViewById(R.id.order_page_fullname);
         order_page_phoneno = findViewById(R.id.order_page_phoneno);
         order_page_username = findViewById(R.id.order_page_username);
+
+        placeorde_relative_layout = findViewById(R.id.placeorde_relative_layout);
 
         placeorder_main_progress = findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
@@ -144,6 +148,9 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                             //if no error- that is error = false
                             if (!orderResponses.getError()) {
+
+                                placeorde_relative_layout.setVisibility(View.GONE);
+
                                 Log.i("Order Success", orderResponses.getMessage() + orderResponses.getError() );
                                 db.clearCart();
                                 updatecartCount();
