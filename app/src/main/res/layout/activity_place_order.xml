@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@android:color/darker_gray" />
+                android:background="#D5D5D5" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginLeft="40dp"
-                android:background="@android:color/darker_gray" />
+                android:background="#D5D5D5" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -190,7 +190,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="@android:color/darker_gray" />
+                android:background="#D5D5D5" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>

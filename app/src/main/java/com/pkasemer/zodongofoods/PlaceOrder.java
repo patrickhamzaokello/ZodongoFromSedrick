@@ -132,6 +132,9 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             @Override
             public void onClick(View view) {
 
+                btnCheckout.setEnabled(false);
+                btnCheckout.setClickable(false);
+
                 placeorder_main_progress.setVisibility(View.VISIBLE);
 
                 postAllCartItems().enqueue(new Callback<OrderResponse>() {
@@ -161,6 +164,8 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                             } else {
                                 Log.i("Ress", "message: " + (orderResponses.getMessage()));
                                 Log.i("et", "error false: " + (orderResponses.getError()));
+                                btnCheckout.setEnabled(true);
+                                btnCheckout.setClickable(true);
 
                                 ShowOrderFailed();
 
@@ -169,6 +174,8 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                         } else {
                             Log.i("Order Response null", "Order is null Try Again: ");
+                            btnCheckout.setEnabled(true);
+                            btnCheckout.setClickable(true);
 
                             ShowOrderFailed();
 
@@ -181,6 +188,9 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                     @Override
                     public void onFailure(Call<OrderResponse> call, Throwable t) {
                         placeorder_main_progress.setVisibility(View.GONE);
+                        btnCheckout.setEnabled(true);
+                        btnCheckout.setClickable(true);
+
 
                         t.printStackTrace();
                         Log.i("Order Failed", "Order Failed Try Again: " + t);

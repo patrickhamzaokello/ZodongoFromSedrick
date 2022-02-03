@@ -22,8 +22,8 @@
     <color name="green3">#D9564A</color>
     <color name="green4">#D96B43</color>
 
-    <color name="changebtn">#FF0000</color>
-    <color name="order_locationcolor">#066B1B</color>
+    <color name="changebtn">#FF2407</color>
+    <color name="order_locationcolor">#175313</color>
 
 
 
@@ -36,7 +36,7 @@
     <color name="buttonRed">#CE2630</color>
     <color name="btnClose">#A6A6A6</color>
 
-    <color name="onboardingBG">#252525</color>
+    <color name="onboardingBG">#fff</color>
     <color name="niceGreen">#15950D</color>
     <color name="niceBlue">#0075D3</color>
     <color name="pendingstatus">#D59F00</color>
