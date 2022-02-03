@@ -63,10 +63,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:fontFamily="@font/montserrat"
-
+                            android:layout_marginTop="5dp"
                             android:includeFontPadding="false"
                             android:text="pkasemer"
-                            android:textColor="@color/black"
+                            android:textColor="@color/light_grey"
                             android:textSize="14sp" />
 
 
@@ -75,13 +75,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/montserrat"
 
                             android:includeFontPadding="false"
                             android:text="+256-787 250196"
                             android:layout_marginBottom="20dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/light_grey"
                             android:textSize="14sp" />
 
                         <RelativeLayout
@@ -181,7 +180,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
                                     android:includeFontPadding="false"
-                                    android:text="CASH ON DELIVERY"
+                                    android:text="Cash on Delivery"
                                     android:fontFamily="@font/montserrat"
                                     android:textColor="@color/black"
                                     android:textSize="13sp" />
@@ -228,7 +227,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#e9f6ef"
+            android:background="#FFFFFF"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingBottom="20dp"
