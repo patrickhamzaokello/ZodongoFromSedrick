@@ -11,194 +11,216 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/cart_items_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/procceed_checkout_layout"
-            android:orientation="vertical"
-            android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:includeFontPadding="false"
-                android:text="DELIVERING TO"
-                android:textColor="@color/light_grey"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/order_page_fullname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:includeFontPadding="false"
-                android:text="Patrick Hamza Okello"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/order_page_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:includeFontPadding="false"
-                android:text="pkasemer"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:id="@+id/order_page_phoneno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="40dp"
-                android:includeFontPadding="false"
-                android:text="+256-787 250196"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="10dp"
-                android:background="#D5D5D5" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/PlaceOrdericon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_truck" />
-
-                <LinearLayout
-                    android:id="@+id/AddressLayout"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/welcome_card_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_toLeftOf="@id/btn_change_location"
-                    android:layout_toRightOf="@+id/PlaceOrdericon"
-                    android:orientation="vertical">
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="#00000000"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:padding="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FAFFFFFF"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/montserrat"
+
+                            android:layout_marginBottom="10dp"
+                            android:includeFontPadding="false"
+                            android:text="DELIVERING TO"
+                            android:textColor="@color/light_grey"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/order_page_fullname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/montserrat"
+
+                            android:includeFontPadding="false"
+                            android:text="Patrick Hamza Okello"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/order_page_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/montserrat"
+
+                            android:includeFontPadding="false"
+                            android:text="pkasemer"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:includeFontPadding="false"
-                        android:text="DELIVERY ADDRESS"
-                        android:textColor="@color/light_grey"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/order_page_phoneno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/montserrat"
 
-                    <TextView
-                        android:id="@+id/location_address_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:includeFontPadding="false"
-                        android:text="Obote Avenue, 3rd Drive Road"
-                        android:textColor="@color/order_locationcolor"
-                        android:textSize="13sp" />
+                            android:includeFontPadding="false"
+                            android:text="+256-787 250196"
+                            android:layout_marginBottom="20dp"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/PlaceOrdericon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_truck" />
+
+                            <LinearLayout
+                                android:id="@+id/AddressLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_toLeftOf="@id/btn_change_location"
+                                android:layout_toRightOf="@+id/PlaceOrdericon"
+                                android:orientation="vertical">
 
 
-                </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:includeFontPadding="false"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="DELIVERY ADDRESS"
+                                    android:textColor="@color/light_grey"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/location_address_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:fontFamily="@font/montserrat"
+                                    android:includeFontPadding="false"
+                                    android:text="Obote Avenue, 3rd Drive Road"
+                                    android:textColor="@color/order_locationcolor"
+                                    android:textSize="13sp" />
 
 
-                <TextView
-                    android:id="@+id/btn_change_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="CHANGE"
-                    android:textColor="@color/changebtn"
-                    android:textSize="12sp" />
+                            </LinearLayout>
 
+
+                            <TextView
+                                android:id="@+id/btn_change_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/montserrat"
+                                android:text="CHANGE"
+                                android:textColor="@color/changebtn"
+                                android:textSize="12sp" />
+
+
+                        </RelativeLayout>
+
+
+
+                        <RelativeLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/moneyPlaceOrdericon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_credit" />
+
+                            <LinearLayout
+                                android:id="@+id/MoneyLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_toLeftOf="@id/moneyChangeButton"
+                                android:layout_toRightOf="@+id/moneyPlaceOrdericon"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:includeFontPadding="false"
+                                    android:text="PAYMENT METHOD"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textColor="@color/light_grey"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:includeFontPadding="false"
+                                    android:text="CASH ON DELIVERY"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/moneyChangeButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/montserrat"
+
+                                android:text="CHANGE"
+                                android:textColor="@color/changebtn"
+                                android:textSize="12sp" />
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.gms.maps.MapView
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginLeft="40dp"
-                android:background="#D5D5D5" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/moneyPlaceOrdericon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_credit" />
-
-                <LinearLayout
-                    android:id="@+id/MoneyLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_toLeftOf="@id/moneyChangeButton"
-                    android:layout_toRightOf="@+id/moneyPlaceOrdericon"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:includeFontPadding="false"
-                        android:text="PAYMENT METHOD"
-                        android:textColor="@color/light_grey"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:includeFontPadding="false"
-                        android:text="CASH ON DELIVERY"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
-
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:id="@+id/moneyChangeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="CHANGE"
-                    android:textColor="@color/changebtn"
-                    android:textSize="12sp" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="10dp"
-                android:background="#D5D5D5" />
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-        </LinearLayout>
 
 
         <LinearLayout

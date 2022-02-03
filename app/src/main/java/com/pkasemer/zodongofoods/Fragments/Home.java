@@ -335,8 +335,8 @@ public class Home extends Fragment  {
         AlertDialog.Builder android = new AlertDialog.Builder(getContext());
         android.setTitle("No Internet Connection");
         android.setIcon(R.drawable.africanwoman);
-        android.setMessage("Check your Internet Connection and  Try again.!  Error Code: Zodongo 4M301.")
-                .setCancelable(false)
+        android.setMessage("Check your Internet Connection and  Try again.!  Error Code: Zodongo4M301.")
+//                .setCancelable(false)
 
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                     @Override

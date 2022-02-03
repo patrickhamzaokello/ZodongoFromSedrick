@@ -152,7 +152,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         order_page_fullname.setText(userModel.getFullname());
         order_page_username.setText(userModel.getUsername());
         order_page_phoneno.setText(userModel.getPhone());
-        location_address_view.setText(userModel.getAddress() + " - " + userModel.getPhone());
+        location_address_view.setText(userModel.getAddress());
 
 
         orderRequest.setOrderAddress(userModel.getAddress() + " - " + userModel.getPhone());
@@ -406,7 +406,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
         }
     }
 }
