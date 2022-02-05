@@ -390,7 +390,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
+
+
     </RelativeLayout>
+    <include layout="@layout/order_recommend_layout" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

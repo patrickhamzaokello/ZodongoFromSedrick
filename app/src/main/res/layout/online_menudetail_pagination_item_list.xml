@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FCFCFC"
-    android:layout_marginBottom="20dp"
+    android:background="@color/rootbg"
     android:orientation="vertical">
 
 
@@ -38,10 +37,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginTop="@dimen/activity_margin"
-        android:background="@color/rootbg"
+        android:background="@color/white"
         android:orientation="vertical"
         android:paddingStart="@dimen/poster_thumb_width"
         android:paddingLeft="@dimen/poster_thumb_width"

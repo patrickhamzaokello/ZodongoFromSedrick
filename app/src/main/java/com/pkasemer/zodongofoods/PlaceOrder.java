@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,7 +73,8 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     TextView btn_change_location, moneyChangeButton, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
 
     RelativeLayout placeorde_relative_layout;
-    Button btnCheckout;
+    LinearLayout orderRecommendLayout;
+    Button btnCheckout,btnTodaysMEnu,btnGoHOme;
 
     private static final int LOCATION_MIN_UPDATE_TIME = 10;
     private static final int LOCATION_MIN_UPDATE_DISTANCE = 1000;
@@ -144,6 +146,10 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
         placeorder_main_progress = findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
+        orderRecommendLayout = findViewById(R.id.order_recommend_layout);
+        btnTodaysMEnu = findViewById(R.id.order_btn_todayMenu);
+        btnGoHOme = findViewById(R.id.btnGoHOme);
+
 
         OrderTotalling();
 
@@ -178,6 +184,22 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             }
         });
 
+        btnTodaysMEnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PlaceOrder.this, RootActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnGoHOme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PlaceOrder.this, RootActivity.class);
+                startActivity(i);
+            }
+        });
+
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,12 +226,15 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                                 placeorde_relative_layout.setVisibility(View.GONE);
 
+
                                 Log.i("Order Success", orderResponses.getMessage() + orderResponses.getError() );
                                 db.clearCart();
                                 updatecartCount();
                                 OrderTotalling();
                                 OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
                                 orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
+
+                                orderRecommendLayout.setVisibility(View.VISIBLE);
 
                             } else {
                                 Log.i("Ress", "message: " + (orderResponses.getMessage()));

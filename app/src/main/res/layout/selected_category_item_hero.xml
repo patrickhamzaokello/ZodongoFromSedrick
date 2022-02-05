@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/poster_hero_height"
-    android:layout_marginBottom="@dimen/activity_margin_content"
     app:cardBackgroundColor="@color/rootbg"
     app:cardCornerRadius="3dp"
     app:cardPreventCornerOverlap="false">
@@ -13,8 +12,9 @@
     <ImageView
         android:id="@+id/movie_poster"
         android:layout_width="match_parent"
+        android:scaleType="centerCrop"
         android:layout_height="match_parent"
-        tools:background="@color/rootbg"/>
+        tools:background="@drawable/beefstew"/>
 
     <View
         android:layout_width="match_parent"
