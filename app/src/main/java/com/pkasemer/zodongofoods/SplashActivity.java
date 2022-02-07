@@ -59,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, OnBoarding.class);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginMaterial.class);
+                    Intent intent = new Intent(SplashActivity.this, SignUpOptions.class);
                     startActivity(intent);
 
 //                    Pair[] pairs = new Pair[3];

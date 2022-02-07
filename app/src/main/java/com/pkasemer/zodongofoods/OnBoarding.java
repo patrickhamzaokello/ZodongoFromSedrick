@@ -56,7 +56,7 @@ public class OnBoarding extends AppCompatActivity {
             findViewById(R.id.get_started_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(OnBoarding.this, RegisterMaterial.class);
+                    Intent intent = new Intent(OnBoarding.this, SignUpOptions.class);
                     startActivity(intent);
                     finish();
                 }
