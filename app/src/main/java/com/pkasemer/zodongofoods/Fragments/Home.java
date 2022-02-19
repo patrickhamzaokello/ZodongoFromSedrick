@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,27 +14,21 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.pkasemer.zodongofoods.Adapters.HomeMenuCategoryAdapter;
 import com.pkasemer.zodongofoods.Adapters.HomeSectionedRecyclerViewAdapter;
-import com.pkasemer.zodongofoods.Adapters.HomeSliderAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
-import com.pkasemer.zodongofoods.Models.Banner;
-import com.pkasemer.zodongofoods.Models.HomeBannerModel;
-import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
-import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModelResult;
-import com.pkasemer.zodongofoods.Models.SectionedCategoryMenu;
-import com.pkasemer.zodongofoods.Models.SectionedCategoryResult;
+import com.pkasemer.zodongofoods.Models.Category;
+import com.pkasemer.zodongofoods.Models.HomeFeed;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
-import com.smarteist.autoimageslider.SliderView;
+import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
+import com.pkasemer.zodongofoods.Utils.PaginationScrollListener;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -45,29 +38,40 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Home extends Fragment  {
+public class Home extends Fragment implements PaginationAdapterCallback {
 
-    public Home() {
-        // Required empty public constructor
-    }
+
 
     private static final String TAG = "MainActivity";
+
+    HomeSectionedRecyclerViewAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
+
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
     Button btnRetry;
-    TextView txtError,categorylable,category_desc;
-    SliderView sliderView;
-    CardView welcome_card_layout;
+    TextView txtError;
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    RecyclerView sectionedmenurecyclerView;
-    List<HomeMenuCategoryModelResult> homeMenuCategoryModelResults;
-    List<SectionedCategoryResult> sectionedCategoryResults;
-    List<Banner> banners;
-    HomeMenuCategoryAdapter homeMenuCategoryAdapter;
+    private static final int PAGE_START = 1;
+
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
+    private static int TOTAL_PAGES = 5;
+    private int currentPage = PAGE_START;
+    private final int selectCategoryId = 3;
+
+    List<Category> categories;
+
     private MovieService movieService;
     private Object PaginationAdapterCallback;
 
+
+    public Home() {
+        // Required empty public constructor
+    }
 
 
 
@@ -85,230 +89,166 @@ public class Home extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // new
-        rv = view.findViewById(R.id.home_main_recycler);
-        progressBar = view.findViewById(R.id.home_main_progress);
+        rv = view.findViewById(R.id.main_recycler);
+        progressBar = view.findViewById(R.id.main_progress);
         errorLayout = view.findViewById(R.id.error_layout);
         btnRetry = view.findViewById(R.id.error_btn_retry);
         txtError = view.findViewById(R.id.error_txt_cause);
+        swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
 
+        adapter = new HomeSectionedRecyclerViewAdapter(getContext(), this);
 
-        categorylable = view.findViewById(R.id.categorylable);
-        category_desc = view.findViewById(R.id.category_desc);
-        sliderView = view.findViewById(R.id.home_slider);
-        welcome_card_layout = view.findViewById(R.id.welcome_card_layout);
-
-
-        homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(getContext());
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-        rv.setLayoutManager(staggeredGridLayoutManager);
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(linearLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(homeMenuCategoryAdapter);
+
+        rv.setAdapter(adapter);
+
+        rv.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+
+                loadNextPage();
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
 
         //init service and load data
         movieService = MovieApi.getClient(getContext()).create(MovieService.class);
 
-        setUpHomeSectionRecyclerView(view);
+        loadFirstPage();
 
+        btnRetry.setOnClickListener(v -> loadFirstPage());
 
-        btnRetry.setOnClickListener(v -> {
-            loadFirstPage();
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
 
         return view;
     }
+    private void doRefresh() {
+        progressBar.setVisibility(View.VISIBLE);
+        if (callHomeFeed().isExecuted())
+            callHomeFeed().cancel();
 
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        // TODO: Check if data is stale.
+        //  Execute network request if cache is expired; otherwise do not update data.
+        adapter.getMovies().clear();
+        adapter.notifyDataSetChanged();
         loadFirstPage();
-
+        swipeRefreshLayout.setRefreshing(false);
     }
-
-
-
 
     private void loadFirstPage() {
+        Log.d(TAG, "loadFirstPage: ");
 
-        class LoadFirstPage extends AsyncTask<Void, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                Log.d(TAG, "loadFirstPage: ");
-
-                // To ensure list is visible when retry button in error view is clicked
-                hideErrorView();
-
-                homeslider();
-                populateHomeCategories();
-                populateHomeSectionRecyclerView();
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                return "done";
-            }
-        }
-
-        LoadFirstPage ulLoadFirstPage = new LoadFirstPage();
-        ulLoadFirstPage.execute();
-    }
-
-    private void populateHomeCategories() {
-        callGetMenuCategoriesApi().enqueue(new Callback<HomeMenuCategoryModel>() {
-            @Override
-            public void onResponse(Call<HomeMenuCategoryModel> call, Response<HomeMenuCategoryModel> response) {
-                hideErrorView();
-                // Got data. Send it to adapter
-                homeMenuCategoryModelResults = fetchResults(response);
-                progressBar.setVisibility(View.GONE);
-                if (homeMenuCategoryModelResults.isEmpty()) {
-                    return;
-                } else {
-                    homeMenuCategoryAdapter.addAll(homeMenuCategoryModelResults);
-                    sliderView.setVisibility(View.VISIBLE);
-                    categorylable.setVisibility(View.VISIBLE);
-                    category_desc.setVisibility(View.VISIBLE);
-                    welcome_card_layout.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<HomeMenuCategoryModel> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-    }
-
-    //populate Sectioned view
-    private void populateHomeSectionRecyclerView() {
         // To ensure list is visible when retry button in error view is clicked
         hideErrorView();
-        callGetSectionedCategoriesApi().enqueue(new Callback<SectionedCategoryMenu>() {
+        currentPage = PAGE_START;
+
+        callHomeFeed().enqueue(new Callback<HomeFeed>() {
             @Override
-            public void onResponse(Call<SectionedCategoryMenu> call, Response<SectionedCategoryMenu> response) {
+            public void onResponse(Call<HomeFeed> call, Response<HomeFeed> response) {
                 hideErrorView();
+
+//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
                 // Got data. Send it to adapter
-                sectionedCategoryResults = fetchSectionedResults(response);
+                categories = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if (sectionedCategoryResults.isEmpty()) {
+                if(categories.isEmpty()){
+                    showCategoryErrorView();
                     return;
                 } else {
-                    HomeSectionedRecyclerViewAdapter adapter = new HomeSectionedRecyclerViewAdapter(getContext(), sectionedCategoryResults);
-                    sectionedmenurecyclerView.setAdapter(adapter);
+                    adapter.addAll(categories);
                 }
 
+                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
             }
 
             @Override
-            public void onFailure(Call<SectionedCategoryMenu> call, Throwable t) {
+            public void onFailure(Call<HomeFeed> call, Throwable t) {
                 t.printStackTrace();
                 showErrorView(t);
             }
         });
-
     }
 
-    public void homeslider() {
 
-        callGetHomeBanners().enqueue(new Callback<HomeBannerModel>() {
+
+    private List<Category> fetchResults(Response<HomeFeed> response) {
+        HomeFeed homeFeed = response.body();
+        TOTAL_PAGES = homeFeed.getTotalPages();
+        System.out.println("total pages" + TOTAL_PAGES);
+
+        return homeFeed.getCategories();
+    }
+
+    private void loadNextPage() {
+        Log.d(TAG, "loadNextPage: " + currentPage);
+
+        callHomeFeed().enqueue(new Callback<HomeFeed>() {
             @Override
-            public void onResponse(Call<HomeBannerModel> call, Response<HomeBannerModel> response) {
-                hideErrorView();
-                // Got data. Send it to adapter
-                banners = fetchBannerResults(response);
-                progressBar.setVisibility(View.GONE);
-                if (banners.isEmpty()) {
-                    return;
-                } else {
-                    // initializing the slider view.
-                    sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-                    sliderView.setScrollTimeInSec(3);
-                    sliderView.setAutoCycle(true);
-                    sliderView.startAutoCycle();
-                    // passing this array list inside our adapter class.
-                    HomeSliderAdapter adapter = new HomeSliderAdapter(getContext(), banners);
-                    sliderView.setSliderAdapter(adapter);
-                }
+            public void onResponse(Call<HomeFeed> call, Response<HomeFeed> response) {
+                Log.i(TAG, "onResponse: " + currentPage
+                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
+                adapter.removeLoadingFooter();
+                isLoading = false;
+
+                categories = fetchResults(response);
+                adapter.addAll(categories);
+
+                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
             }
 
             @Override
-            public void onFailure(Call<HomeBannerModel> call, Throwable t) {
+            public void onFailure(Call<HomeFeed> call, Throwable t) {
                 t.printStackTrace();
-                showErrorView(t);
+                adapter.showRetry(true, fetchErrorMessage(t));
             }
         });
-
-    }
-
-
-    private List<HomeMenuCategoryModelResult> fetchResults(Response<HomeMenuCategoryModel> response) {
-        HomeMenuCategoryModel homeMenuCategoryModel = response.body();
-        int TOTAL_PAGES = homeMenuCategoryModel.getTotalPages();
-        System.out.println("total pages cat" + TOTAL_PAGES);
-        return homeMenuCategoryModel.getResults();
-    }
-
-    private List<SectionedCategoryResult> fetchSectionedResults(Response<SectionedCategoryMenu> response) {
-        SectionedCategoryMenu sectionedCategoryMenu = response.body();
-        int TOTAL_PAGES = sectionedCategoryMenu.getTotalPages();
-        System.out.println("total pages cat" + TOTAL_PAGES);
-        return sectionedCategoryMenu.getSectionedCategoryResults();
-    }
-
-    private List<Banner> fetchBannerResults(Response<HomeBannerModel> response) {
-        HomeBannerModel homeBannerModel = response.body();
-        int TOTAL_PAGES = homeBannerModel.getTotalPages();
-        System.out.println("total pages banners" + TOTAL_PAGES);
-        return homeBannerModel.getBanners();
     }
 
 
     /**
-     * Performs a Retrofit call to the callGetMenuCategoriesApi API.
+     * Performs a Retrofit call to the top rated movies API.
      * Same API call for Pagination.
+     * As {@link #currentPage} will be incremented automatically
+     * by @{@link PaginationScrollListener} to load next page.
      */
-    private Call<HomeBannerModel> callGetHomeBanners() {
-        return movieService.getHomeBanners();
+    private Call<HomeFeed> callHomeFeed() {
+        return movieService.getHomeFeed(
+                currentPage
+        );
     }
 
-    private Call<HomeMenuCategoryModel> callGetMenuCategoriesApi() {
-        return movieService.getMenuCategories();
+    @Override
+    public void retryPageLoad() {
+        loadNextPage();
     }
 
-    private Call<SectionedCategoryMenu> callGetSectionedCategoriesApi() {
-        return movieService.getMenuCategoriesSection();
+    @Override
+    public void requestfailed() {
+
     }
-
-
-    private void setUpHomeSectionRecyclerView(View view) {
-        sectionedmenurecyclerView = view.findViewById(R.id.menu_sectioned_recyclerView);
-        sectionedmenurecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        sectionedmenurecyclerView.setLayoutManager(linearLayoutManager);
-    }
-
-
-
 
 
     /**
@@ -322,9 +262,6 @@ public class Home extends Fragment  {
             progressBar.setVisibility(View.GONE);
 
             txtError.setText(fetchErrorMessage(throwable));
-
-            showCategoryErrorView();
-
         }
     }
 
@@ -333,12 +270,12 @@ public class Home extends Fragment  {
         progressBar.setVisibility(View.GONE);
 
         AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("No Internet Connection");
+        android.setTitle("Coming Soon");
         android.setIcon(R.drawable.africanwoman);
-        android.setMessage("Check your Internet Connection and  Try again.!  Error Code: Zodongo4M301.")
-//                .setCancelable(false)
+        android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
+                .setCancelable(false)
 
-                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Home", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //go to activity
@@ -346,10 +283,18 @@ public class Home extends Fragment  {
                         startActivity(intent);
                     }
                 });
-
+        android.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //go to activity
+                Intent intent = new Intent(getActivity(), RootActivity.class);
+                startActivity(intent);
+            }
+        });
         android.create().show();
 
     }
+
 
 
     /**
@@ -387,6 +332,5 @@ public class Home extends Fragment  {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(getContext().CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
-
 
 }

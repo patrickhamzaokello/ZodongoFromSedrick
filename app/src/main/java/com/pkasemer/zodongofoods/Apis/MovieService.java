@@ -2,6 +2,7 @@ package com.pkasemer.zodongofoods.Apis;
 
 import com.pkasemer.zodongofoods.Models.FoodDBModel;
 import com.pkasemer.zodongofoods.Models.HomeBannerModel;
+import com.pkasemer.zodongofoods.Models.HomeFeed;
 import com.pkasemer.zodongofoods.Models.HomeMenuCategoryModel;
 import com.pkasemer.zodongofoods.Models.OrderRequest;
 import com.pkasemer.zodongofoods.Models.OrderResponse;
@@ -43,7 +44,13 @@ public interface MovieService {
     @GET("banner/read.php")
     Call<HomeBannerModel> getHomeBanners();
 
-//    menus/menudetails.php?menuId=9&category=3&page=1
+    //    http://192.168.0.199:8080/projects/ZodongoFoodsAPI/home/homefeed.php?page=1
+    @GET("home/homefeed.php")
+    Call<HomeFeed> getHomeFeed(
+            @Query("page") int pageIndex
+    );
+
+    //    menus/menudetails.php?menuId=9&category=3&page=1
     @GET("menus/menudetails.php")
     Call<SelectedCategoryMenuItem> getMenuDetails(
             @Query("menuId") int menu_id,
@@ -51,13 +58,10 @@ public interface MovieService {
             @Query("page") int pageIndex
     );
 
-
     @POST("orders/create_order.php")
     Call<OrderResponse> postCartOrder(
             @Body OrderRequest orderRequest
     );
-
-
 
     //fetch past orders
     @GET("orders/userOrders.php")
@@ -65,7 +69,6 @@ public interface MovieService {
             @Query("customerId") int customerID,
             @Query("page") int pageIndex
     );
-
 
 
 }

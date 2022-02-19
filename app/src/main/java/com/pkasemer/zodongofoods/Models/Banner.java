@@ -21,6 +21,9 @@ public class Banner {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("category_id")
+    @Expose
+    private Integer category_id;
     @SerializedName("display_order")
     @Expose
     private Integer displayOrder;
@@ -53,6 +56,14 @@ public class Banner {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Integer category_id) {
+        this.category_id = category_id;
     }
 
     public Integer getStatus() {

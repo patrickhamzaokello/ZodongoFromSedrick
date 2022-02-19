@@ -1,16 +1,12 @@
 
 package com.pkasemer.zodongofoods.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
 @Generated("jsonschema2pojo")
-public class SectionedMenuItem implements Parcelable {
+public class SectionedMenuItem {
 
     @SerializedName("menu_id")
     @Expose
@@ -48,8 +44,6 @@ public class SectionedMenuItem implements Parcelable {
     @SerializedName("rating")
     @Expose
     private Integer rating;
-
-
 
     public Integer getMenuId() {
         return menuId;
@@ -147,38 +141,4 @@ public class SectionedMenuItem implements Parcelable {
         this.rating = rating;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.menuId);
-        dest.writeString(this.menuName);
-        dest.writeInt(this.price);
-        dest.writeString(this.description);
-        dest.writeInt(this.menuTypeId);
-        dest.writeString(this.menuImage);
-        dest.writeString(this.backgroundImage);
-        dest.writeString(this.ingredients);
-        dest.writeInt(this.menuStatus);
-        dest.writeString(this.created);
-        dest.writeString(this.modified);
-        dest.writeInt(this.rating);
-
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
-
-        @Override
-        public Object createFromParcel(Parcel source) {
-            return source;
-        }
-
-        @Override
-        public Object[] newArray(int size) {
-            return new Object[0];
-        }
-    };
 }
