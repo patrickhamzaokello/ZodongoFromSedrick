@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/poster_hero_height"
     app:cardBackgroundColor="@color/rootbg"
-    app:cardCornerRadius="3dp"
+    app:cardCornerRadius="0dp"
     app:cardPreventCornerOverlap="false">
 
     <ImageView

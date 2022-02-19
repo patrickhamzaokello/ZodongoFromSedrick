@@ -24,25 +24,20 @@ import retrofit2.http.Query;
 
 public interface MovieService {
 
+    //selected category and its products end point
+//    https://zodongofoods.com/mobile/api/v1/menus/menupages.php?category=1&page=1
     @GET("menus/menupages.php")
     Call<SelectedCategoryMenuItem> getTopRatedMovies(
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
 
+    //search end
+//    https://zodongofoods.com/mobile/api/v1/menus/topmenuitems.php?page=1
     @GET("menus/topmenuitems.php")
     Call<SelectedCategoryMenuItem> getTopMenuItems(
             @Query("page") int pageIndex
     );
-
-    @GET("menucategory/readPaginated.php")
-    Call<HomeMenuCategoryModel> getMenuCategories();
-
-    @GET("menucategory/readSectionedMenu.php")
-    Call<SectionedCategoryMenu> getMenuCategoriesSection();
-
-    @GET("banner/read.php")
-    Call<HomeBannerModel> getHomeBanners();
 
     //    http://192.168.0.199:8080/projects/ZodongoFoodsAPI/home/homefeed.php?page=1
     @GET("home/homefeed.php")
