@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#FBFBFB"
     android:clipToPadding="false"
@@ -10,8 +10,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/image_card_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:scaleType="fitXY"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp">
@@ -38,7 +38,7 @@
 
     <LinearLayout
         android:id="@+id/product_detail"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image_card_view"
         android:orientation="vertical"
@@ -47,16 +47,16 @@
 
         <TextView
             android:id="@+id/category_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:ellipsize="end"
+            android:maxLines="1"
             android:fontFamily="@font/montserrat"
             android:gravity="left"
-            android:maxLines="2"
             android:text="Home Essentials"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
 
 

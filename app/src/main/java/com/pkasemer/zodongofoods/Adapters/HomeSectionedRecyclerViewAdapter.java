@@ -1,6 +1,7 @@
 package com.pkasemer.zodongofoods.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.zodongofoods.Models.Category;
+import com.pkasemer.zodongofoods.MySelectedCategory;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
@@ -123,11 +126,9 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 final CategoryVH categoryVH = (CategoryVH) holder;
                 HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-//                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-//                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
 
-                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, 3);
-                categoryVH.category_recycler_view.setLayoutManager(catgridLayoutManager);
 
                 categoryVH.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
                 categoryVH.category_recycler_view.setAdapter(homeMenuCategoryAdapter);
@@ -138,6 +139,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
                 movieVH.sectionLabel.setText(category.getName());
+                movieVH.section_label_desc.setText(category.getDescription());
 
                 //recycler view for items
                 movieVH.itemRecyclerView.setHasFixedSize(true);
@@ -156,13 +158,12 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 movieVH.showAllButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
-//                        //PACK DATA
-//                        i.putExtra("SENDER_KEY", "MyFragment");
-//                        i.putExtra("category_selected_key", sectionedCategoryResult.getId());
-//                        context.startActivity(i);
 
-                        Toast.makeText(v.getContext(), category.getName(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MyFragment");
+                        i.putExtra("category_selected_key", category.getId());
+                        context.startActivity(i);
 
                     }
                 });
@@ -326,13 +327,14 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView sectionLabel, showAllButton;
+        private TextView sectionLabel,section_label_desc, showAllButton;
         private RecyclerView itemRecyclerView;
 
         public MovieVH(View itemView) {
             super(itemView);
 
             sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
+            section_label_desc = (TextView) itemView.findViewById(R.id.section_label_desc);
             showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
             itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
         }

@@ -146,7 +146,6 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                         i.putExtra("category_selected_key", featuredCategory.getId());
                         context.startActivity(i);
 
-                        Toast.makeText(context, featuredCategory.getId(), Toast.LENGTH_SHORT).show();
 
 
                     }

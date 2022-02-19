@@ -242,11 +242,6 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<SelectedCategoryMenuItem> callTopRatedMoviesApi() {
-//        return movieService.getTopRatedMovies(
-//                getString(R.string.my_api_key),
-//                "en_US",
-//                currentPage
-//        );
         return movieService.getTopRatedMovies(
                 selectCategoryId,
                 currentPage

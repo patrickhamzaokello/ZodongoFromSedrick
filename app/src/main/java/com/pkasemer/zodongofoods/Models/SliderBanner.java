@@ -19,7 +19,7 @@ public class SliderBanner {
     private String imageUrl;
     @SerializedName("category_id")
     @Expose
-    private String categoryId;
+    private int categoryId;
     @SerializedName("status")
     @Expose
     private String status;
@@ -57,11 +57,11 @@ public class SliderBanner {
         this.imageUrl = imageUrl;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 

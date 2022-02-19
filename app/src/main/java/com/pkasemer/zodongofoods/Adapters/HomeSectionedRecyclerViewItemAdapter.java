@@ -64,7 +64,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
     }
 
     private final Context context;
-    private final List<SectionedMenuItem> products;
+    private final List<SectionedMenuItem> sectionedMenuItems;
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
 
@@ -82,7 +82,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
     public HomeSectionedRecyclerViewItemAdapter(Context context, List<SectionedMenuItem> sectionedMenuItems) {
         this.context = context;
-        this.products = sectionedMenuItems;
+        this.sectionedMenuItems = sectionedMenuItems;
     }
 
     @Override
@@ -93,11 +93,11 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        final SectionedMenuItem product = products.get(position);
+        final SectionedMenuItem sectionedMenuItem = sectionedMenuItems.get(position);
 
         db = new SenseDBHelper(context);
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getMenuId()));
+        food_db_itemchecker = db.checktweetindb(String.valueOf(sectionedMenuItem.getMenuId()));
 
         updatecartCount();
 
@@ -116,13 +116,13 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         }
 
 
-        holder.item_name.setText(product.getMenuName());
-        holder.item_rating.setText( "Rating "+ product.getRating() + " | "+ "5");
-        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getPrice()));
+        holder.item_name.setText(sectionedMenuItem.getMenuName());
+        holder.item_rating.setText(getrating(sectionedMenuItem.getRating() + 5) );
+        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(sectionedMenuItem.getPrice()));
 
         Glide
                 .with(context)
-                .load(BASE_URL_IMG + product.getMenuImage())
+                .load(BASE_URL_IMG + sectionedMenuItem.getMenuImage())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -145,27 +145,26 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         holder.home_st_carttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                food_db_itemchecker = db.checktweetindb(String.valueOf(product.getMenuId()));
+                food_db_itemchecker = db.checktweetindb(String.valueOf(sectionedMenuItem.getMenuId()));
 
 
                 if (food_db_itemchecker) {
-//                    db.addTweet(
-//                            product.getMenuId(),
-//                            product.getMenuName(),
-//                            product.getPrice(),
-//                            product.getDescription(),
-//                            product.getMenuTypeId(),
-//                            product.getMenuImage(),
-//                            product.getBackgroundImage(),
-//                            product.getIngredients(),
-//                            product.getMenuStatus(),
-//                            product.getCreated(),
-//                            product.getModified(),
-//                            product.getRating(),
-//                            minteger,
-//                            MENU_NOT_SYNCED_WITH_SERVER
-//                    );
-
+                    db.addTweet(
+                            sectionedMenuItem.getMenuId(),
+                            sectionedMenuItem.getMenuName(),
+                            sectionedMenuItem.getPrice(),
+                            sectionedMenuItem.getDescription(),
+                            sectionedMenuItem.getMenuTypeId(),
+                            sectionedMenuItem.getMenuImage(),
+                            sectionedMenuItem.getBackgroundImage(),
+                            sectionedMenuItem.getIngredients(),
+                            sectionedMenuItem.getMenuStatus(),
+                            sectionedMenuItem.getCreated(),
+                            sectionedMenuItem.getModified(),
+                            sectionedMenuItem.getRating(),
+                            minteger,
+                            MENU_NOT_SYNCED_WITH_SERVER
+                    );
 
 
                     holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
@@ -174,7 +173,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
                 } else {
-                    db.deleteTweet(String.valueOf(product.getMenuId()));
+                    db.deleteTweet(String.valueOf(sectionedMenuItem.getMenuId()));
 
                     holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
@@ -193,8 +192,8 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
                 //PACK DATA
                 i.putExtra("SENDER_KEY", "MenuDetails");
-                i.putExtra("selectMenuId", product.getMenuId());
-                i.putExtra("category_selected_key", product.getMenuTypeId());
+                i.putExtra("selectMenuId", sectionedMenuItem.getMenuId());
+                i.putExtra("category_selected_key", sectionedMenuItem.getMenuTypeId());
                 context.startActivity(i);
             }
         });
@@ -226,9 +225,15 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    private String getrating(int productRating){
+        double result = productRating/2;
+        String stringdouble= Double.toString(result);
+        return stringdouble;
+    }
+
     @Override
     public int getItemCount() {
-        return products.size();
+        return sectionedMenuItems.size();
     }
 
 

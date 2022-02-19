@@ -3,6 +3,7 @@ package com.pkasemer.zodongofoods.Adapters;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.zodongofoods.Models.SliderBanner;
+import com.pkasemer.zodongofoods.MySelectedCategory;
 import com.pkasemer.zodongofoods.R;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
@@ -77,6 +79,19 @@ public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.Slide
                 .centerCrop()
                 .transition(withCrossFade(factory))
                 .into(viewHolder.imageViewBackground);
+
+        viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+                //PACK DATA
+                i.putExtra("SENDER_KEY", "MyFragment");
+                i.putExtra("category_selected_key", sliderBanner.getCategoryId());
+                context.startActivity(i);
+
+            }
+        });
     }
 
     // this method will return

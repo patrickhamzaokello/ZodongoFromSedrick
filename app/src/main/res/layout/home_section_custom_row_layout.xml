@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/rootbg"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="30dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -39,7 +39,9 @@
             android:layout_toLeftOf="@+id/section_show_all_button"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
-            android:text="Kakebe Shop Online"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Zodongo Foods"
             android:textColor="@color/light_black"
             android:textSize="14sp" />
 

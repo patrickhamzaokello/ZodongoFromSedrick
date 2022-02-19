@@ -35,7 +35,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
-            android:text="Kakebe Shop Online"
+            android:text="Zodongo Foods"
             android:textColor="@color/light_black"
             android:textSize="14sp" />
 
