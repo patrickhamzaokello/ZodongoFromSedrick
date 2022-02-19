@@ -17,8 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="300dp">
 
-
-
             <ImageView
                 android:id="@+id/menu_image"
                 android:layout_width="match_parent"
@@ -440,7 +438,53 @@
             app:strokeWidth="1dp" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/recommendation_title"
+            >
+
+            <TextView
+                android:id="@+id/menu_similar_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:maxLines="3"
+                android:shadowColor="@android:color/black"
+                android:text="You might like these"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+
+                />
+
+            <TextView
+                android:id="@+id/menu_similar_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/montserrat"
+                android:includeFontPadding="false"
+                android:shadowColor="@android:color/black"
+                android:text="We got similar items on our menu based on your recent interests"
+                android:textColor="#424242"
+                android:textSize="14sp"
+
+                />
+
+        </LinearLayout>
+
+
+
+
     </LinearLayout>
+
+
 
 
 </LinearLayout>

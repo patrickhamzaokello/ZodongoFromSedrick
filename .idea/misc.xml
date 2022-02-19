@@ -6,6 +6,7 @@
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/drawable/custom_check_btn.xml" value="0.1045" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/font/montserrat_bold.xml" value="0.234375" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/activity_login_material.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/activity_my_selected_category.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/activity_register_material.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/activity_sign_up_options.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/activity_splash_activity.xml" value="0.1671195652173913" />
@@ -16,7 +17,11 @@
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/home_section_custom_row_layout.xml" value="0.129981884057971" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/home_section_item_custom_row_layout.xml" value="0.4" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/home_slider_layout.xml" value="0.129981884057971" />
-        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/selected_category_item_hero.xml" value="0.1015625" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/online_menudetail_hero.xml" value="0.13541666666666666" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/online_menudetail_pagination_item_list.xml" value="0.21" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/selected_category_item_hero.xml" value="0.22" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/selected_category_pagination_item_list.xml" value="0.13541666666666666" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/zodongoAndroid/app/src/main/res/layout/similar_menu_recycler.xml" value="0.13541666666666666" />
       </map>
     </option>
   </component>

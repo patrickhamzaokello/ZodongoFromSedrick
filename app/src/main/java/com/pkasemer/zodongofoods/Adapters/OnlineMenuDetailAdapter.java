@@ -139,7 +139,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
 
-
                 heroVh.menu_name.setText(selectedCategoryMenuItemResult.getMenuName());
                 heroVh.menu_shortinfo.setText(formatYearLabel(selectedCategoryMenuItemResult));
                 heroVh.menu_description.setText(selectedCategoryMenuItemResult.getDescription());
@@ -188,7 +187,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 } else {
                     heroVh.btnAddtoCart.setText("Remove from Cart");
-                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonGreen));
+                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonRed));
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
                     minteger = db.getMenuQtn(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
@@ -295,7 +294,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                             heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonRed));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
                             heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
@@ -734,6 +733,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final Button menu_detail_st_likebtn;
         private final ProgressBar mProgress;
 
+        private final LinearLayout recommendation_title;
+
 
         public HeroVH(View itemView) {
             super(itemView);
@@ -756,6 +757,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
 
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
+            recommendation_title = itemView.findViewById(R.id.recommendation_title);
+
         }
     }
 

@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLength="40"
+                android:textSize="18sp"
                 android:maxLines="1"
                 android:textColor="@color/white"
                 tools:text="Doctor Who : The Day of the Doctor"/>
@@ -64,7 +65,6 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_margin_half"
             android:alpha="0.7"
             android:ellipsize="end"
             android:maxLines="2"
