@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -145,7 +146,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                         i.putExtra("category_selected_key", featuredCategory.getId());
                         context.startActivity(i);
 
-
+                        Toast.makeText(context, featuredCategory.getId(), Toast.LENGTH_SHORT).show();
 
 
                     }
