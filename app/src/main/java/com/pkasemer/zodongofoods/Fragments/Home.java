@@ -1,10 +1,13 @@
 package com.pkasemer.zodongofoods.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,10 +27,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.pkasemer.zodongofoods.Adapters.HomeSectionedRecyclerViewAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.Dialogs.OrderNotFound;
+import com.pkasemer.zodongofoods.Dialogs.UpdateAppDialog;
 import com.pkasemer.zodongofoods.Models.Category;
 import com.pkasemer.zodongofoods.Models.HomeFeed;
+import com.pkasemer.zodongofoods.OnBoarding;
 import com.pkasemer.zodongofoods.R;
 import com.pkasemer.zodongofoods.RootActivity;
+import com.pkasemer.zodongofoods.SignUpOptions;
+import com.pkasemer.zodongofoods.SplashActivity;
 import com.pkasemer.zodongofoods.Utils.PaginationAdapterCallback;
 import com.pkasemer.zodongofoods.Utils.PaginationScrollListener;
 
@@ -46,7 +55,7 @@ public class Home extends Fragment implements PaginationAdapterCallback {
 
     HomeSectionedRecyclerViewAdapter adapter;
     LinearLayoutManager linearLayoutManager;
-
+    SharedPreferences appVersion_sharedPreferences;
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
@@ -60,6 +69,10 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     private boolean isLastPage = false;
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
+    //setting initial app version
+    private static int NEW_APP_VERSION = 4;
+    private static int PHONE_APP_VERSION = 3;
+
     private int currentPage = PAGE_START;
     private final int selectCategoryId = 3;
 
@@ -137,6 +150,14 @@ public class Home extends Fragment implements PaginationAdapterCallback {
         btnRetry.setOnClickListener(v -> loadFirstPage());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkAppVersion();
+            }
+        }, 8000);
 
 
         return view;
@@ -248,6 +269,26 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     @Override
     public void requestfailed() {
 
+    }
+
+
+    public void checkAppVersion(){
+        appVersion_sharedPreferences = getActivity().getSharedPreferences("appVersionCheck", Context.MODE_PRIVATE);
+        int appversion = appVersion_sharedPreferences.getInt("version", PHONE_APP_VERSION);
+
+        if(appversion < NEW_APP_VERSION){
+            SharedPreferences.Editor editor = appVersion_sharedPreferences.edit();
+            editor.putInt("version", PHONE_APP_VERSION);
+            editor.commit();
+
+            Toast.makeText(getContext(), "appV:" + appversion + ",Update your app", Toast.LENGTH_SHORT).show();
+//            showupdatedialog
+            UpdateAppDialog updateAppDialog = new UpdateAppDialog();
+            updateAppDialog.show(getActivity().getSupportFragmentManager(), "Update App");
+        } else {
+            Toast.makeText(getContext(), "appV:" + appversion + "app_old:"+PHONE_APP_VERSION +"app_new:"+NEW_APP_VERSION, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

@@ -120,8 +120,13 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
         getSupportActionBar().setTitle("Zodongo Foods"); // set the top title
-        String title = actionBar.getTitle().toString(); // get the title
-        actionBar.hide();
+        actionBar.setTitle("Place Order");
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
 
         movieService = MovieApi.getClient(PlaceOrder.this).create(MovieService.class);
         db = new SenseDBHelper(PlaceOrder.this);
@@ -316,6 +321,12 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     private void updatelocationView(String location) {
         location_address_view.setText(location);
         orderRequest.setOrderAddress(location);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 

@@ -192,7 +192,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         if (filteredlist.isEmpty()) {
             // if no item is added in filtered list we are
             // displaying a toast message as no data found.
-            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
 //            loadNextPage();
 
         } else {
