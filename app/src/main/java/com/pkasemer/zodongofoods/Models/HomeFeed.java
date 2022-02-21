@@ -12,6 +12,9 @@ public class HomeFeed {
     @SerializedName("page")
     @Expose
     private Integer page;
+    @SerializedName("app_version")
+    @Expose
+    private Integer appVersion;
     @SerializedName("categories")
     @Expose
     private List<Category> categories = null;
@@ -28,6 +31,14 @@ public class HomeFeed {
 
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    public Integer getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(Integer appVersion) {
+        this.appVersion = appVersion;
     }
 
     public List<Category> getCategories() {

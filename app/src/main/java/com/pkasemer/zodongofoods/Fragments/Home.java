@@ -27,6 +27,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.pkasemer.zodongofoods.Adapters.HomeSectionedRecyclerViewAdapter;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.BottomDialogs.ShowRoundDialogFragment;
 import com.pkasemer.zodongofoods.Dialogs.OrderNotFound;
 import com.pkasemer.zodongofoods.Dialogs.UpdateAppDialog;
 import com.pkasemer.zodongofoods.Models.Category;
@@ -70,8 +71,8 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     //setting initial app version
-    private static int NEW_APP_VERSION = 4;
-    private static int PHONE_APP_VERSION = 3;
+    private static int NEW_APP_VERSION = 2;
+    private static int PHONE_APP_VERSION = 2;
 
     private int currentPage = PAGE_START;
     private final int selectCategoryId = 3;
@@ -157,7 +158,7 @@ public class Home extends Fragment implements PaginationAdapterCallback {
             public void run() {
                 checkAppVersion();
             }
-        }, 8000);
+        }, 5000);
 
 
         return view;
@@ -187,7 +188,7 @@ public class Home extends Fragment implements PaginationAdapterCallback {
             public void onResponse(Call<HomeFeed> call, Response<HomeFeed> response) {
                 hideErrorView();
 
-//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 // Got data. Send it to adapter
                 categories = fetchResults(response);
@@ -216,8 +217,8 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     private List<Category> fetchResults(Response<HomeFeed> response) {
         HomeFeed homeFeed = response.body();
         TOTAL_PAGES = homeFeed.getTotalPages();
-        System.out.println("total pages" + TOTAL_PAGES);
-
+        NEW_APP_VERSION = homeFeed.getAppVersion();
+        Log.i("NEW_APP_VERSION", String.valueOf(NEW_APP_VERSION));
         return homeFeed.getCategories();
     }
 
@@ -284,6 +285,7 @@ public class Home extends Fragment implements PaginationAdapterCallback {
             Toast.makeText(getContext(), "appV:" + appversion + ",Update your app", Toast.LENGTH_SHORT).show();
 //            showupdatedialog
             UpdateAppDialog updateAppDialog = new UpdateAppDialog();
+            updateAppDialog.setCancelable(false);
             updateAppDialog.show(getActivity().getSupportFragmentManager(), "Update App");
         } else {
             Toast.makeText(getContext(), "appV:" + appversion + "app_old:"+PHONE_APP_VERSION +"app_new:"+NEW_APP_VERSION, Toast.LENGTH_SHORT).show();

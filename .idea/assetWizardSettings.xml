@@ -318,8 +318,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_star_rate_24" />
-                            <entry key="sourceFile" value="C:\Users\KaKebe\Downloads\iPhone 13 5\Group 81.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_patternx_02_1" />
+                            <entry key="sourceFile" value="C:\Users\KaKebe\Downloads\Patternx-02 1.svg" />
                           </map>
                         </option>
                       </PersistentState>

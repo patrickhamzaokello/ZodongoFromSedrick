@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.zodongofoods.Apis.MovieApi;
 import com.pkasemer.zodongofoods.Apis.MovieService;
+import com.pkasemer.zodongofoods.BottomDialogs.ShowRoundDialogFragment;
 import com.pkasemer.zodongofoods.Dialogs.ChangeLocation;
 import com.pkasemer.zodongofoods.Dialogs.ChangePaymentMethod;
 import com.pkasemer.zodongofoods.Dialogs.OrderConfirmationDialog;
@@ -132,8 +133,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         db = new SenseDBHelper(PlaceOrder.this);
         cartitemlist = db.listTweetsBD();
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        initView(savedInstanceState);
+
 
         btn_change_location = findViewById(R.id.btn_change_location);
         moneyChangeButton = findViewById(R.id.moneyChangeButton);
@@ -236,10 +236,16 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                                 db.clearCart();
                                 updatecartCount();
                                 OrderTotalling();
-                                OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
-                                orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
+//                                OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
+//                                orderConfirmationDialog.setCancelable(false);
+//                                orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
+
+
+                                ShowRoundDialogFragment showRoundDialogFragment = ShowRoundDialogFragment.newInstance();
+                                showRoundDialogFragment.show(getSupportFragmentManager(), "order_complete");
 
                                 orderRecommendLayout.setVisibility(View.VISIBLE);
+
 
                             } else {
                                 Log.i("Ress", "message: " + (orderResponses.getMessage()));
@@ -280,6 +286,9 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             }
         });
 
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        initView(savedInstanceState);
 
     }
 
@@ -414,6 +423,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
                 }
                 if (location != null) {
                     drawMarker(location, getText(R.string.i_am_here).toString());
+
                 }
             }
         } else {
