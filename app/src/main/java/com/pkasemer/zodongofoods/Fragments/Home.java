@@ -71,16 +71,14 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     //setting initial app version
-    private static int NEW_APP_VERSION = 2;
-    private static int PHONE_APP_VERSION = 2;
+    private static int NEW_APP_VERSION;
+    private static int PHONE_APP_VERSION = 3;
 
     private int currentPage = PAGE_START;
-    private final int selectCategoryId = 3;
 
     List<Category> categories;
 
     private MovieService movieService;
-    private Object PaginationAdapterCallback;
 
 
     public Home() {
@@ -153,12 +151,8 @@ public class Home extends Fragment implements PaginationAdapterCallback {
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkAppVersion();
-            }
-        }, 5000);
+        // check application version
+        checkAppVersion();
 
 
         return view;
@@ -282,13 +276,13 @@ public class Home extends Fragment implements PaginationAdapterCallback {
             editor.putInt("version", PHONE_APP_VERSION);
             editor.commit();
 
-            Toast.makeText(getContext(), "appV:" + appversion + ",Update your app", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "appV:" + appversion + ",Update your app", Toast.LENGTH_SHORT).show();
 //            showupdatedialog
             UpdateAppDialog updateAppDialog = new UpdateAppDialog();
             updateAppDialog.setCancelable(false);
             updateAppDialog.show(getActivity().getSupportFragmentManager(), "Update App");
         } else {
-            Toast.makeText(getContext(), "appV:" + appversion + "app_old:"+PHONE_APP_VERSION +"app_new:"+NEW_APP_VERSION, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "appV:" + appversion + "app_old:"+PHONE_APP_VERSION +"app_new:"+NEW_APP_VERSION, Toast.LENGTH_SHORT).show();
 
         }
     }

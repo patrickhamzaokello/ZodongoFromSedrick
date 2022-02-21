@@ -351,7 +351,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             updatelocationView(location_name + "-" + phone);
 
         } else {
-            Toast.makeText(getApplicationContext(), "Location and Phone not Changed", Toast.LENGTH_SHORT);
+//            Toast.makeText(getApplicationContext(), "Location and Phone not Changed", Toast.LENGTH_SHORT);
         }
 
 
